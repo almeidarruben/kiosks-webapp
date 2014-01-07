@@ -13,7 +13,6 @@ class Submenus(Page):
         null=False, 
         blank=False)
 
-
 	class Meta:
 		verbose_name = _('Submenu')
 		verbose_name_plural = _('Submenus')
@@ -24,11 +23,19 @@ class Botoes(models.Model):
         max_length=100)
 
 	descricao = models.TextField(_('Descrição'), 
-		max_length=300)
+		max_length=300,
+		null=True,
+		blank=True)
 
+	link_para = models.ForeignKey('pages.Page')
 
 	def __unicode__(self):
 		return "%s" % self.titulo
+
+	class Meta:
+		verbose_name = _('Botão')
+		verbose_name_plural = _('Botões')
+
 
 admin.site.register(Submenus, PageAdmin)
 admin.site.register(Botoes)

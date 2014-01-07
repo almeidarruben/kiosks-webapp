@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load mezzanine_tags keyword_tags %}
+{% load myfilters %}
+
+{% block meta_title %}{{ page.meta_title }}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ page.description }}
+{% endmetablock %}{% endblock %}
+
+{% block title %}
+{% editable page.title %}{{ page.title }}{% endeditable %}
+{% endblock %}
+
+{% block main %}
+
+{% if page.pagina %}
+
+	<p>é página</p>
+	{{ page.description }}
+
+{% elif page.submenus %}
+
+	<p>é submenu</p>
+	{% for botao in page.submenus.botoes.all %}
+		<a href="{{ botao.link_para.get_absolute_url }}">{{ botao }}</a>
+	{% endfor %}
+
+{% endif %}
+
+{% endblock %}
