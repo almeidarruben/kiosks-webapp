@@ -17,6 +17,8 @@ class Pagina(Page):
         null=False,
         blank=False)
 
+    #TODO: meter o texto como richtext
+
     rodape = models.TextField(_('Rodapé'), 
         max_length=150,
         null=True,
@@ -35,6 +37,8 @@ class BotoesPopup(models.Model):
         verbose_name=_('Botão Popup'),
         null=False,
         blank=False)
+
+    #TODO: fazer variavel no json para diferenciar os dois tipos de página: com ou sem botões
 
     titulo = models.CharField(_('Título'), 
         max_length=100)

@@ -40,5 +40,6 @@ def get_pagina(request, pagina):
     	response_data['botoes']={}
     	for botao in pagina_nova.botoes.all():
     		response_data['botoes'][botao.pk]=model_to_dict(botao)
+    		response_data['botoes'][botao.pk]['slug']=botao.link_para.slug
 
     return HttpResponse(simplejson.dumps(response_data), content_type="application/json")
