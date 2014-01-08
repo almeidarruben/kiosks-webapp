@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags mezzanine_tags i18n future staticfiles %}
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+<!--<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">-->
+
+{% compress css %}
+<link href="{{ STATIC_URL }}css/sub-menus.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}css/page-layouts.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}css/simplemodal.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
+{% block extra_css %}{% endblock %}
+{% endcompress %}
+
+{% compress js %}
+<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+<script src="{% static "js/functions.js" %}"></script>
+<script src="{{ STATIC_URL }}js/jquery.simplemodal.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}js/simplemodal.basic.js" type='text/javascript' ></script>
+{% block extra_js %}{% endblock %}
+{% endcompress %}
+
+{% block extra_head %}{% endblock %}
+</head>
+
+<body id="{% block body_id %}body{% endblock %}">
+    <header>
+        <div id="logo-left">
+            <p>iifa<p>
+        </div>
+        <div id="logo-right">
+            <p>instituto de investigação e formação avançada da universidade de évora<p>
+        </div>
+        <nav>
+            {% page_menu "menus/header_menu.html" %}
+        </nav>
+        <div id="clock">
+            <h1 id="clock-time"></h1>
+            <h2 id="clock-day"></h2>
+            <h3 id="clock-date"></h3>      
+        </div>
+    </header>
+    <div class="container">
+      <div class="content">
+        {% block main %}
+
+        {% endblock %}
+      </div>
+      <div class="sidebar">
+      </div>
+    </div>
+    <footer>
+        <div class="footer-info">
+            <div class="events">
+                <h1>Eventos</h1>
+                <ul>
+                    <li>
+                        <div class="topic-date">
+                            <div class="topic-day"></div>
+                            <div class="topic-month"></div>
+                        </div>
+                        <h2></h2>
+                        <p></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="exams">
+                <h1>Provas</h1>
+            </div>
+            <div class="news">
+                <h1>Notícias</h1>
+                <ul>
+                    <li>
+                      <h2></h2>
+                      <p></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div>
+                <a>Ficha Técnica</a>
+                <p>Todos os direitos reservados iifa &copy; 2014</p>
+            </div>
+        </div>
+    </footer>
+
+{% include "includes/footer_scripts.html" %}
+
+</body>
+</html>
