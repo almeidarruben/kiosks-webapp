@@ -51,6 +51,7 @@ setInterval(function(){getTime()},500);
 /* Set z-index order */
 function setZindexOrder(navID) {
   var cntElements = $(navID).length;
+
   $(navID).css('z-index', function(i) {
       return cntElements - i;
   })
@@ -58,7 +59,9 @@ function setZindexOrder(navID) {
 
 /* Set nav buttons css class */
 function setNavCss(navID, navCount) {
+  var ID = document.getElementById(navID);
   var navClass;
+  
   if (navCount <= 2) {
     navClass = 2;
   } else if (navCount > 2 && navCount <= 4) {
@@ -68,37 +71,6 @@ function setNavCss(navID, navCount) {
   } else {
       navClass = 15;
   }
-  $("#" + navID).addClass("page-subnav-" + navClass);
-}
-
-/*
-    Slide Functions
-*/
-function goto(id) {
-  $(".content-container").children().hide();
-  $(".content-container").css({
-    position: "relative",
-    left: "1024px",
-  });
-  $(".content-container").animate({"left": "-1024"}, 600);
   
-  $(id).css({
-    position: "relative",
-    left: "1024px",
-  }).show();
-  
-  /*
-  $(id).css({
-    position: "absolute",
-    left: "1044px",
-  }); 
-  $(".content-container").animate({"left": "-1044"}, 600);
-  */
+  $(ID).addClass("page-subnav-" + navClass);
 }
-
-function gotoBack(id) {
-  $(".content-container").animate({"left": -($(id).position().left)}, 600);
-}
-
-
-
