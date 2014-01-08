@@ -20,13 +20,13 @@ def to_json(queryset, fields = None):
 
 def get_pagina(request, pagina):
     pagina_nova = get_object_or_404(Page, pk=pagina)
+    css_class = ''
     if Pagina.objects.filter(pk=pagina):
     	pagina_nova = Pagina.objects.get(pk=pagina)
-    	print "é página"
+    	css_class = 'page'
     elif Submenus.objects.filter(pk=pagina):
     	pagina_nova = Submenus.objects.get(pk=pagina)
-    	print "é submenu"
-    print "pagina: ", pagina_nova
+    	css_class = 'submenus'
 
     #TODO: ver os fields necessários para cada um dos casos
 
@@ -35,7 +35,8 @@ def get_pagina(request, pagina):
         del response_data[item]
 
     response_data={'pagina': response_data}
-    if Submenus.objects.filter(pk=pagina):
+    response_data['class']=css_class
+    if css_class == 'submenus':
     	response_data['botoes']={}
     	for botao in pagina_nova.botoes.all():
     		response_data['botoes'][botao.pk]=model_to_dict(botao)
