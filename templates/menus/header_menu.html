@@ -1,0 +1,31 @@
+<script>
+  r = 56;
+  g = 59;
+  b = 62;
+
+  function setMenuProperties() {
+    var cntIndex = $('nav li').length;
+    $('nav li div').css('z-index', function(i) {
+      
+      $(this).css('background-color', "rgb(" + r + ","+ g + "," + b + ")");
+      r += 24;
+      g += 25;
+      b += 26;
+      
+      return cntIndex - i;
+    });
+  }
+</script>
+
+{% load pages_tags %}
+<ul>
+  {% for page in page_branch %}
+  <li>
+      <div class="button" {% if page.is_current %} class="active"{% endif %}>
+          <a {% if page.is_current %} class="active"{% endif %} href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+      </div>
+  </li>
+  {% endfor %}
+</ul>
+
+<script>setMenuProperties();</script>
