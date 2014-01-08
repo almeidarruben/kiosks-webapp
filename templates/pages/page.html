@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load mezzanine_tags keyword_tags %}
-{% load myfilters %}
 
 {% block meta_title %}{{ page.meta_title }}{% endblock %}
 
@@ -22,6 +21,19 @@
 
 {% block main %}
 
+<script type="text/javascript">
+
+function getPagina(pagina_pk, div_id) {
+	pagina = document.getElementById("#"+div_id);
+	console.log("link_para: "+pagina_pk);
+	var url = "/get/pagina/"+pagina_pk;
+    $.get(url, function(data) {
+    		pagina.innerHTML = data.pagina.title;
+    	});
+};
+
+</script>
+
 {% if page.pagina %}
 
 	<p>é página</p>
@@ -29,9 +41,9 @@
 
 {% elif page.submenus %}
 
-	<p>é submenu</p>
 	{% for botao in page.submenus.botoes.all %}
-		<a href="{{ botao.link_para.get_absolute_url }}">{{ botao }}</a>
+		<p><a href="#" onClick="getPagina({{ botao.link_para.pk }}, '{{ botao.link_para.slug }}')">{{ botao }}</a></p>
+		<div id="#{{ botao.link_para.slug }}"></div>
 	{% endfor %}
 
 {% endif %}

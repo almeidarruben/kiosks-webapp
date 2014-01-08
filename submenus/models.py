@@ -7,34 +7,36 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 class Submenus(Page):
-	botoes = models.ManyToManyField(
+    botoes = models.ManyToManyField(
         'Botoes',
         verbose_name=_('Botões'),
         null=False, 
         blank=False)
 
-	class Meta:
-		verbose_name = _('Submenu')
-		verbose_name_plural = _('Submenus')
+    class Meta:
+        verbose_name = _('Submenu')
+        verbose_name_plural = _('Submenus')
 
 
 class Botoes(models.Model):
-	titulo = models.CharField(_('Título'), 
+    titulo = models.CharField(_('Título'), 
         max_length=100)
 
-	descricao = models.TextField(_('Descrição'), 
-		max_length=300,
-		null=True,
-		blank=True)
+    descricao = models.TextField(_('Descrição'), 
+        max_length=300,
+        null=True,
+        blank=True)
 
-	link_para = models.ForeignKey('pages.Page')
+    link_para = models.ForeignKey('pages.Page')
 
-	def __unicode__(self):
-		return "%s" % self.titulo
+    #TODO: adicionar campo de peso unique_togueter com o titulo para ordenar os botões
 
-	class Meta:
-		verbose_name = _('Botão')
-		verbose_name_plural = _('Botões')
+    def __unicode__(self):
+        return "%s" % self.titulo
+
+    class Meta:
+        verbose_name = _('Botão')
+        verbose_name_plural = _('Botões')
 
 
 admin.site.register(Submenus, PageAdmin)

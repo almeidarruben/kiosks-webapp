@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.db import models
-from mezzanine.pages.models import Page, RichText
+from mezzanine.pages.models import Page
 from mezzanine.pages.admin import PageAdmin
 from django.contrib import admin
 from copy import deepcopy
