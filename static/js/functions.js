@@ -59,7 +59,7 @@ function setZindexOrder(navID) {
 
 /* Set nav buttons css class */
 function setNavCss(navID, navCount) {
-  var ID = document.getElementById(navID);
+  //var ID = document.getElementById(navID);
   var navClass;
   
   if (navCount <= 2) {
@@ -72,5 +72,10 @@ function setNavCss(navID, navCount) {
       navClass = 15;
   }
   
-  $(ID).addClass("page-subnav-" + navClass);
+  $("#" + navID).addClass("page-subnav-" + navClass);
+}
+
+/* gotoBack */
+function gotoBack(elementID) {
+  $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);
 }

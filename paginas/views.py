@@ -39,7 +39,9 @@ def get_pagina(request, pagina):
     if css_class == 'submenus':
     	response_data['botoes']={}
     	for botao in pagina_nova.botoes.all():
-    		response_data['botoes'][botao.pk]=model_to_dict(botao)
-    		response_data['botoes'][botao.pk]['slug']=botao.link_para.slug
+            response_data['botoes'][botao.pk]=model_to_dict(botao)
+            slug_formated = botao.link_para.slug
+            slug_formated = slug_formated.replace("/", "-");
+            response_data['botoes'][botao.pk]['slug']=slug_formated
 
     return HttpResponse(simplejson.dumps(response_data), content_type="application/json")
