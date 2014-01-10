@@ -245,6 +245,7 @@ header #clock h3 {
   top: 80%;
 }*/
 
+/* sidebar */
 .sidebar {
   width: 336px;
   height: 100%;
@@ -253,6 +254,60 @@ header #clock h3 {
   overflow-y: auto;
 }
 
+.sidebar-content {
+  width: 90%;
+  height: 90%;
+  margin: 10px auto;
+  margin-bottom: 0;
+}
+.sidebar h1 {
+  font-weight: bold;
+  font-size: 20px;
+  color: #333333;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  color: #666666;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.sidebar h3 {
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 10px;
+}
+
+.sidebar p {
+  font-size: 12px;
+  color: #666666;
+}
+
+.sidebar nav {
+  height: 20px;
+  width: 90%;
+  margin: 2px auto;
+  margin-bottom: 0;
+}
+
+.sidebar nav div {
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin-right: 10px;
+  display: block;
+  cursor: pointer;
+  background: red;
+}
+
+.sidebar-img {
+  width: 1024px;
+  height: 368px;
+  background: gray;
+}
 /*
   footer
 */
@@ -579,8 +634,3 @@ footer ul li:last-child {
   display: block;
   text-decoration: none;
 }
-/*.footer-search select option { 
-  background: rgba(0,0,0,0.3);
-  color:#fff;
-  text-shadow:0 1px 0 rgba(0,0,0,0.4);
-}*/

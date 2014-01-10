@@ -13,9 +13,9 @@ function getDayName() {
   day[5]="Sexta";
   day[6]="Sábado";
   var dayName = day[date.getDay()];
+  $('#clock-day').empty();
   $('#clock-day').append(dayName);
 }
-getDayName();
 
 function getFullDate() {
   var day = date.getDate();
@@ -33,9 +33,10 @@ function getFullDate() {
   month[10]="Novembro";
   month[11]="Dezembro";
   var monthName = month[date.getMonth()];
+  $('#clock-date').empty();
   $('#clock-date').append(day + " de " + monthName);
 }
-getFullDate();
+
 function getTime() {
   var time = new Date();
   var hours = (hours = time.getHours()) < 10 ? '0' + hours : hours
@@ -43,12 +44,10 @@ function getTime() {
   $('#clock-time').empty();
   $('#clock-time').append(hours + ":" + minutes + "h");
 }
-setInterval(function(){getTime()},500);
 
 /*
     Page Sub-nav
 */
-
 /* Set nav buttons css class */
 function setNavCss(navID, navCount) {
   var navClass;
@@ -82,3 +81,18 @@ function gotoBack(elementID, currentID) {
   setTimeout(function() { $("#goto_div").empty();}, 700);
   
 }
+
+function sidebarGoto(elementID) {
+  $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);  
+}
+
+/***
+    Ready funciton
+***/
+$(function() {
+  setInterval(function(){
+    getDayName();
+    getFullDate();
+    getTime();
+  },500);
+});
