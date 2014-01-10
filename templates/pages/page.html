@@ -29,6 +29,7 @@ function goto(pagina_pk, div_id, parent) {
     var divID = document.getElementById(formatedSlug);
 	var url = "/get/pagina/"+pagina_pk;
 	var returnDivID = parent + "-nav";
+	var str = "";
 
     $.get(url, function(data) {
 		if (data.class == "page") {
@@ -36,7 +37,7 @@ function goto(pagina_pk, div_id, parent) {
 			// FIXME: paragraphs in data.pagina.description & data.pagina.rodape
         
 		} else if (data.class == "submenus") {
-			var str = "<nav id='" + data.pagina.slug + "-nav' class='page-subnav'>";
+			str = "<nav id='" + data.pagina.slug + "-nav' class='page-subnav'>";
 			var menuLinks = "";
 			
 			$.each(data.botoes, function(index, element) {
@@ -54,28 +55,38 @@ function goto(pagina_pk, div_id, parent) {
 			divID.innerHTML = "<div id=" + data.pagina.slug + " class='page'><div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-C'><h1>" + data.pagina.title + "</h1><div class='page-text-C'><p>" + data.pagina.endereco + "</p><br><p>Email: " + data.pagina.email + "</p><p>Telefone: " + data.pagina.telefone + "</p><p>Fax: " + data.pagina.fax + "</p><p>Web: " + data.pagina.website + "</p></div></div><img class='page-contact-img' src='#'></div></div>";
             
 		} else if (data.class == "list") {
-			var str = "<div class='list-wrapper'><h1>" + data.pagina.title + "</h1><div class='list-container'>";
 
-			$.get(url, function(list_data) {
-				var item = jQuery.parseJSON(list_data.pagina.items);
-				alert(item);
-					if (index == 0) {
-						str += "<div class='list-item-category'><h1>" + category_data.nome + "</h1>";
-					} else {
-						str += "<div class='list-item'>";
-					}
+			if (data.pagina.tipo == "prot_pub") {
+				protocolUrl = "/get/items/"+pagina_pk;
+				$.get(protocolUrl, function(protocol_data) {
+					str = "<div class='protocol-wrapper'><div class='protocol-content'>";
+					$.each(protocol_data, function(protocol, element) {
+						str += "<div class='protocol-topic'><h1>" + element.titulo + "</h1><p>" + element.objectivos + "</p><div class='protocol-subtitle'><h2>Assinatura:</h2><p>" + element.assinatura + "</p><h2>Termo:</h2><p>" + element.termo + "</p></div><div class='protocol-subtitle'><h2>Unidade:</h2><p>" + element.unidade + "</p></div></div>"
+					});
+					str += "</div></div>"
+					divID.innerHTML = str;
+				});
+			} else {
+				str = "<div class='list-wrapper'><h1>" + data.pagina.title + "</h1><div class='list-container'>";
 
-					str += "<h2>" + item[index].fields.titulo +"</h2><div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Candidatura:</p><p>"+ item[index].fields.candidatura +"</p></div>";
+				var catUrl = "/get/items/"+pagina_pk;
+				$.get(catUrl, function(list_data) {
+					$.each(list_data, function(category, element) {
+						str += "<div class='list-item-category'><h1>" + category + "</h1>";
+						$.each(element, function(index, e) {
+							str += "<div class='list-item'><h2>" + e.titulo +"</h2><div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Candidatura:</p><p>"+ e.candidatura +"</p></div>";
 
-                    str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Fonte de Financiamento:</p><p>" + item[index].fields.financiamento + "</p></div>";
+		                    str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Fonte de Financiamento:</p><p>" + e.financiamento + "</p></div>";
 
-                    str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Unidade:</p><p>" + item[index].fields.unidade + "</p></div>";
+		                    str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Unidade:</p><p>" + e.unidade + "</p></div>";
 
-                    str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Responsável:</p><p>" + item[index].fields.responsavel + "</p></div></div>";
-				
-				str += "</div></div>";
-				divID.innerHTML = str;
-			});
+		                    str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Responsável:</p><p>" + e.responsavel + "</p></div></div>";
+	                	});
+					});
+					str += "</div></div>";
+					divID.innerHTML = str;
+				});
+			}
 		}
 
         $(".content-container").animate({"left": -($(divID).position().left)}, 600);
