@@ -9,7 +9,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.files.storage import FileSystemStorage
 from mezzanine.core.admin import BaseDynamicInlineAdmin, TabularDynamicInlineAdmin
 
-
 #TODO: adicionar helptext
 
 class Pagina(Page):
@@ -68,13 +67,14 @@ class BotoesPopupVideoInline(admin.TabularInline):
 
 pagina_extra_fieldsets = ((None, {"fields": ("titulo",)}),)
 
+"""
 class PaginaAdmin(PageAdmin):
     inlines = (BotoesPopupImagem, BotoesPopupVideo,)
     fieldsets = deepcopy(PageAdmin.fieldsets) + pagina_extra_fieldsets
 
     class Meta:
         max_num = 1
-
+"""
 
 admin.site.register(Pagina, PageAdmin)
 admin.site.register(BotoesPopupImagem)

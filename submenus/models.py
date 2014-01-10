@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from django.db import models
 from mezzanine.pages.models import Page
 from mezzanine.pages.admin import PageAdmin
@@ -27,14 +26,22 @@ class Botoes(models.Model):
         null=True,
         blank=True)
 
-    link_para = models.ForeignKey('pages.Page')
+    PESO_OPTIONS = tuple([('%d' % i, '%d' % i) for i in range(1, 51)])
+    #PESO_OPTIONS = (('a',1),('b',2),('c',3))
 
-    #TODO: adicionar campo de peso unique_togueter com o titulo para ordenar os botões
+    peso = models.CharField(_('Peso'),
+        max_length=50,
+        choices=PESO_OPTIONS,
+        null=False,
+        blank=False)
+
+    link_para = models.ForeignKey('pages.Page')
 
     def __unicode__(self):
         return "%s" % self.titulo
 
     class Meta:
+        ordering = ['peso']
         verbose_name = _('Botão')
         verbose_name_plural = _('Botões')
 
