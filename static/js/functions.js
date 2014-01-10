@@ -48,18 +48,9 @@ setInterval(function(){getTime()},500);
 /*
     Page Sub-nav
 */
-/* Set z-index order */
-function setZindexOrder(navID) {
-  var cntElements = $(navID).length;
-
-  $(navID).css('z-index', function(i) {
-      return cntElements - i;
-  })
-}
 
 /* Set nav buttons css class */
 function setNavCss(navID, navCount) {
-  //var ID = document.getElementById(navID);
   var navClass;
   
   if (navCount <= 2) {
@@ -75,7 +66,19 @@ function setNavCss(navID, navCount) {
   $("#" + navID).addClass("page-subnav-" + navClass);
 }
 
+/* Set z-index order */
+function setZindexOrder(navID) {
+  var cntElements = $(navID).length;
+
+  $(navID).css('z-index', function(i) {
+      return cntElements - i;
+  })
+}
+
 /* gotoBack */
-function gotoBack(elementID) {
+function gotoBack(elementID, currentID) {
   $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);
+  $("#" + currentID).attr("id", "goto_div");
+  setTimeout(function() { $("#goto_div").empty();}, 700);
+  
 }

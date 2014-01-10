@@ -23,18 +23,17 @@
 
 <script type="text/javascript">
 
-function goto(pagina_pk, div_id) {
+function goto(pagina_pk, div_id, parent) {
 	var formatedSlug = div_id.replace("/", "-");
     $("#goto_div").attr("id", formatedSlug);
     var divID = document.getElementById(formatedSlug);
 	var url = "/get/pagina/"+pagina_pk;
-	var returnDivID = "iifa-nav"
+	var returnDivID = parent + "-nav";
 
     $.get(url, function(data) {
 		if (data.class == "page") {
-			divID.innerHTML = "<div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "');\"></div><div class='page-container'><div class='page-text-wrapper-TTFBI'><h1>" + data.pagina.title + "</h1><div class='page-text-TTFBI'><p>" + data.pagina.description + "</p></div><div class='page-text-footer-TTFBI'><p>" + data.pagina.rodape + "</p></div><div class='page-text-buttons-TTFBI'><div class='button button-submit' style='width: 110px;'><a href=''>Centros Associados</a></div></div></div></div>";
-
-			// FIXME: paragrafs in data.pagina.description & data.pagina.rodape
+			divID.innerHTML = "<div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-TTFBI'><h1>" + data.pagina.title + "</h1><div class='page-text-TTFBI'><p>" + data.pagina.description + "</p></div><div class='page-text-footer-TTFBI'><p>" + data.pagina.rodape + "</p></div><div class='page-text-buttons-TTFBI'><div class='button button-submit' style='width: 110px;'><a href=''>Centros Associados</a></div></div></div></div>";
+			// FIXME: paragraphs in data.pagina.description & data.pagina.rodape
         
 		} else if (data.class == "submenus") {
 			var str = "<nav id='" + data.pagina.slug + "-nav' class='page-subnav'>";
@@ -45,17 +44,40 @@ function goto(pagina_pk, div_id) {
 			});
 			
 			str += menuLinks;
-
 			str += "</nav>";
-			divID.innerHTML = str;
-			setNavCss(data.pagina.slug + "-nav", Object.keys(data.botoes).length);
-			//setZindexOrder("#iifa/teste-sub-nav a");
-			// FIXME o id do objecto nao pode ter "/"" por isso é que tinhamos de fazer getElementById
-			// FIXME: tive a testar na consola alterando o id para "iifa-teste-sub-nav" e trabalha, basta entao alterares o valor k passamos no json, pk o zindex so dá para fazer dessa maneira. Pk o getElement.... retorna um objecto e eu preciso é do "nome-do-objecto a" pk o z-index é aplicado no "a"
 
-			// TODO jaslkjdlas
+			divID.innerHTML = str;
+
+			setNavCss(data.pagina.slug + "-nav", Object.keys(data.botoes).length);
+			setZindexOrder("#" + data.pagina.slug + "-nav a");
+		} else if (data.class == "contact") {
+			divID.innerHTML = "<div id=" + data.pagina.slug + " class='page'><div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-C'><h1>" + data.pagina.title + "</h1><div class='page-text-C'><p>" + data.pagina.endereco + "</p><br><p>Email: " + data.pagina.email + "</p><p>Telefone: " + data.pagina.telefone + "</p><p>Fax: " + data.pagina.fax + "</p><p>Web: " + data.pagina.website + "</p></div></div><img class='page-contact-img' src='#'></div></div>";
+            
+		} else if (data.class == "list") {
+			var str = "<div class='list-wrapper'><h1>" + data.pagina.title + "</h1><div class='list-container'>";
+
+			$.get(url, function(list_data) {
+				var item = jQuery.parseJSON(list_data.pagina.items);
+				alert(item);
+					if (index == 0) {
+						str += "<div class='list-item-category'><h1>" + category_data.nome + "</h1>";
+					} else {
+						str += "<div class='list-item'>";
+					}
+
+					str += "<h2>" + item[index].fields.titulo +"</h2><div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Candidatura:</p><p>"+ item[index].fields.candidatura +"</p></div>";
+
+                    str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Fonte de Financiamento:</p><p>" + item[index].fields.financiamento + "</p></div>";
+
+                    str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Unidade:</p><p>" + item[index].fields.unidade + "</p></div>";
+
+                    str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Responsável:</p><p>" + item[index].fields.responsavel + "</p></div></div>";
+				
+				str += "</div></div>";
+				divID.innerHTML = str;
+			});
 		}
-        
+
         $(".content-container").animate({"left": -($(divID).position().left)}, 600);
     });
 };
@@ -63,11 +85,10 @@ function goto(pagina_pk, div_id) {
 </script>
 
 {% if page.pagina %}
-	{{ page.description }}
 {% elif page.submenus %}
 	<nav id="{{page.submenus.slug}}-nav" class="page-subnav">
 		{% for botao in page.submenus.botoes.all %}
-			<a href="#" onClick="goto({{ botao.link_para.pk }}, '{{ botao.link_para.slug }}')">
+			<a href="#" onClick="goto({{ botao.link_para.pk }}, '{{ botao.link_para.slug }}', '{{ page.submenus.slug }}')">
 	        	<h1>{{ botao }}</h1>
 	        </a>
 		{% endfor %}
