@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from paginas.models import Pagina
 from submenus.models import Submenus
-from listagens.models import Listagem
+from listagens.models import Listagem, Item, ProjetoServico, ProtocoloPublicacao
 from contactos.models import Contacto
 
 from mezzanine.pages.models import Page
@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 from django.core import serializers
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
-from django.utils import simplejson
+import json
 
 def to_json(queryset, fields = None):
     JSONSerializer = serializers.get_serializer("json")
@@ -46,6 +46,15 @@ def get_pagina(request, pagina):
 
     response_data['slug'] = pagina_nova.slug.replace("/", "-")
 
+    if css_class == 'list':
+        response_data['items'] = ''
+        #FIXME: corrigir o json dos items
+        if pagina_nova.tipo == 'proj_serv':
+            response_data['items'] = serializers.serialize("json", ProjetoServico.objects.filter(listagem=pagina_nova))
+        elif pagina_nova.tipo == 'prot_pub':
+            response_data['items'] = to_json(ProtocoloPublicacao.objects.filter(listagem=pagina_nova))
+        print response_data['items']
+
     response_data={'pagina': response_data}
     response_data['class']=css_class
     if css_class == 'submenus':
@@ -57,4 +66,4 @@ def get_pagina(request, pagina):
             slug_formated = slug_formated.replace("/", "-")
             response_data['botoes'][botao.pk]['slug']=slug_formated
 
-    return HttpResponse(simplejson.dumps(response_data), content_type="application/json")
+    return HttpResponse(json.dumps(response_data), content_type="application/json")

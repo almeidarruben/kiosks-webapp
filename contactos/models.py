@@ -4,6 +4,8 @@ from mezzanine.pages.models import Page
 from django.contrib import admin
 from mezzanine.pages.admin import PageAdmin
 from django.utils.translation import ugettext_lazy as _
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 
 
 class Contacto(Page):
@@ -29,8 +31,10 @@ class Contacto(Page):
         null = True,
         blank = True)
 
+    mapa = models.ImageField(_('Mapa'), storage=FileSystemStorage(location=settings.MEDIA_ROOT), upload_to='mapas')
+
     def __unicode__(self):
-        return "%s" % self.entidade
+        return "%s" % self.endereco
 
     class Meta:
         verbose_name = _('Contacto')

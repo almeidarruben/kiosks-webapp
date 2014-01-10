@@ -23,6 +23,8 @@ class Pagina(Page):
         null=True,
         blank=True)
 
+    imagem = models.ImageField(_('Imagem'), storage=FileSystemStorage(location=settings.MEDIA_ROOT), upload_to='paginas/imagens')
+
     def __unicode__(self):
         return "%s" % self.title
 
