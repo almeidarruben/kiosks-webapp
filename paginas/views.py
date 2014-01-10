@@ -10,6 +10,7 @@ from django.core import serializers
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
 import json
+from itertools import groupby
 
 def to_json(queryset, fields = None):
     JSONSerializer = serializers.get_serializer("json")
@@ -71,5 +72,25 @@ def get_pagina(request, pagina):
 def get_categoria(request, categoria):
     cat = get_object_or_404(Categoria, pk=categoria)
     response_data = model_to_dict(cat)
+
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+def get_items_by_categoria(request, listagem):
+    items = ''
+    if ProjetoServico.objects.filter(listagem=listagem):
+        items = ProjetoServico.objects.filter(listagem=listagem).order_by('categoria')
+    elif ProtocoloPublicacao.objects.filter(listagem=listagem):
+        items = ProtocoloPublicacao.objects.filter(listagem=listagem).order_by('categoria')
+
+    item_group = list(items)
+    response_data = {}
+
+    for key, group in groupby(item_group, lambda item: item.categoria):
+        response_data['%s'%key] = {}
+        for item in group:
+            response_data['%s'%key][item.pk] = model_to_dict(item)
+            #print "it:", item.pk, "key: ", key
+            print response_data, "\n\n"
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")
