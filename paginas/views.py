@@ -47,14 +47,6 @@ def get_pagina(request, pagina):
 
     response_data['slug'] = pagina_nova.slug.replace("/", "-")
 
-    if css_class == 'list':
-        response_data['items'] = ''
-        #FIXME: corrigir o json dos items
-        if pagina_nova.tipo == 'proj_serv':
-            response_data['items'] = to_json(ProjetoServico.objects.filter(listagem=pagina_nova))
-        elif pagina_nova.tipo == 'prot_pub':
-            response_data['items'] = to_json(ProtocoloPublicacao.objects.filter(listagem=pagina_nova))
-
     response_data={'pagina': response_data}
     response_data['class']=css_class
     if css_class == 'submenus':
@@ -76,21 +68,23 @@ def get_categoria(request, categoria):
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-def get_items_by_categoria(request, listagem):
-    items = ''
+def get_items(request, listagem):
+    items = '', 
+    response_data = {}
     if ProjetoServico.objects.filter(listagem=listagem):
         items = ProjetoServico.objects.filter(listagem=listagem).order_by('categoria')
+        item_group = list(items)
+        for key, group in groupby(item_group, lambda item: item.categoria):
+            response_data['%s'%key] = {}
+            for item in group:
+                response_data['%s'%key][item.pk] = model_to_dict(item)
+                response_data['%s'%key][item.pk]['candidatura'] = '%s'%response_data['%s'%key][item.pk]['candidatura']
+
     elif ProtocoloPublicacao.objects.filter(listagem=listagem):
-        items = ProtocoloPublicacao.objects.filter(listagem=listagem).order_by('categoria')
-
-    item_group = list(items)
-    response_data = {}
-
-    for key, group in groupby(item_group, lambda item: item.categoria):
-        response_data['%s'%key] = {}
-        for item in group:
-            response_data['%s'%key][item.pk] = model_to_dict(item)
-            #print "it:", item.pk, "key: ", key
-            print response_data, "\n\n"
+        items = ProtocoloPublicacao.objects.filter(listagem=listagem)
+        for item in items:
+            response_data[item.pk] = model_to_dict(item)
+            response_data[item.pk]['assinatura'] = '%s'%response_data[item.pk]['assinatura']
+            response_data[item.pk]['termo'] = '%s'%response_data[item.pk]['termo']
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")
