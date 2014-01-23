@@ -243,6 +243,7 @@ INSTALLED_APPS = (
     #"mezzanine.mobile",
     "mezzanine_blocks",
 
+    "sliders",
     "submenus",
     "paginas",
     "listagens",

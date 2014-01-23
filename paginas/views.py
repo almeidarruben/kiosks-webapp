@@ -3,6 +3,7 @@ from paginas.models import Pagina
 from submenus.models import Submenus
 from listagens.models import Listagem, ProjetoServico, ProtocoloPublicacao, Categoria
 from contactos.models import Contacto
+from sliders.models import Slider
 
 from mezzanine.pages.models import Page
 from django.shortcuts import get_object_or_404
@@ -37,6 +38,9 @@ def get_pagina(request, pagina):
     elif Contacto.objects.filter(pk=pagina):
         pagina_nova = Contacto.objects.get(pk=pagina)
         css_class = 'contact'
+    elif Slider.objects.filter(pk=pagina):
+        pagina_nova = Slider.objects.get(pk=pagina)
+        css_class = 'slider'
 
     #TODO: ver os fields necessários para cada um dos casos
 
@@ -82,6 +86,13 @@ def get_pagina(request, pagina):
     if css_class == 'contact':
         response_data['pagina']['mapa'] = \
                 '%s' % response_data['pagina']['mapa']
+
+    if css_class == 'slider':
+        response_data['items']={}
+        for item in pagina_nova.items.all():
+            response_data['items'][item.pk]=model_to_dict(item)
+            response_data['items'][item.pk]['imagem'] = \
+                        '%s' % response_data['items'][item.pk]['imagem']
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 

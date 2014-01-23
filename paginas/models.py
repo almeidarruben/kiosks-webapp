@@ -12,8 +12,6 @@ class Pagina(Page):
         null=False,
         blank=False)
 
-    #TODO: meter o texto como richtext
-
     rodape = models.TextField(_('Rodapé'), 
         max_length=150,
         null=True,
