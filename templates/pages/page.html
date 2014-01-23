@@ -25,7 +25,10 @@
 
 function goto(pagina_pk, div_id, parent) {
 	var formatedSlug = div_id.replace("/", "-");
-    $("#goto_div").attr("id", formatedSlug);
+	$("#dynamic-content").append("<div id='" + formatedSlug + "' class='page'></div>");
+
+	//$("#goto_div").attr("id", formatedSlug);
+
     var divID = document.getElementById(formatedSlug);
 	var url = "/get/pagina/"+pagina_pk;
 	var returnDivID = parent + "-nav";
@@ -42,11 +45,11 @@ function goto(pagina_pk, div_id, parent) {
 			str = "<nav id='" + data.pagina.slug + "-nav' class='page-subnav'>";
 			var menuLinks = "";
 			
-			// FIXME: qualquer coisa falha quando se metem 2 submenus seguidos (pode ter a ver com os caracteres extra ASCII [ã,ç,õ,é,á,etc])
+			// FIXME: limpar o elemento antigo, ao criar as divs dinâmicamente
 			// TODO: botão para voltar para trás
 
 			$.each(data.botoes, function(index, element) {
-				menuLinks += "<a href='#' onClick=\"goto('" + element.link_para + ",'" + element.slug + "')\"><h1>" + element.titulo + "</h1><h2>" + element.descricao + "</h2></a>";
+				menuLinks += "<a href='#' onClick=\"goto('" + element.link_para + "','" + element.slug + "')\"><h1>" + element.titulo + "</h1><h2>" + element.descricao + "</h2></a>";
 			});
 			
 			str += menuLinks;
@@ -97,9 +100,9 @@ function goto(pagina_pk, div_id, parent) {
 		}
 
         $(".content-container").animate({"left": -($(divID).position().left)}, 600);
+        //$(divID).attr("id", "goto_div");
     });
 };
-
 </script>
 
 {% if page.pagina %}
@@ -116,9 +119,8 @@ function goto(pagina_pk, div_id, parent) {
 		{% endfor %}
 	</nav>
 	
-    <div id="goto_div" class="page">
-
-	</div>
+    <!--<div id="goto_div" class="page">
+	</div>-->
 {% elif page.listagem %}
 	<!-- TODO: apresentar listagem -->
 {% elif page.contacto %}
