@@ -107,7 +107,12 @@ def get_items(request, listagem):
     items = '', 
     response_data = {}
     if ProjetoServico.objects.filter(listagem=listagem):
-        items = ProjetoServico.objects.filter(listagem=listagem).order_by('categoria')
+        if request.GET.get('unidade'):
+            items = ProjetoServico.objects.filter(listagem=listagem, unidade=request.GET.get('unidade')).order_by('categoria')
+        elif request.GET.get('categoria'):
+            items = ProjetoServico.objects.filter(listagem=listagem, categoria=request.GET.get('categoria')).order_by('categoria')
+        else:
+            items = ProjetoServico.objects.filter(listagem=listagem).order_by('categoria')
         item_group = list(items)
         for key, group in groupby(item_group, lambda item: item.categoria):
             response_data['%s'%key] = {}
@@ -117,7 +122,10 @@ def get_items(request, listagem):
                         '%s' % response_data['%s'%key][item.pk]['candidatura']
 
     elif ProtocoloPublicacao.objects.filter(listagem=listagem):
-        items = ProtocoloPublicacao.objects.filter(listagem=listagem)
+        if request.GET.get('unidade'):
+            items = ProtocoloPublicacao.objects.filter(listagem=listagem, unidade=request.GET.get('unidade'))
+        else:
+            items = ProtocoloPublicacao.objects.filter(listagem=listagem)
         for item in items:
             response_data[item.pk] = model_to_dict(item)
             response_data[item.pk]['assinatura'] = \
