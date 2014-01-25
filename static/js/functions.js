@@ -87,6 +87,13 @@ function sidebarGoto(elementID) {
   $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);  
 }
 
+function getMainSidebar() {
+  $.get("/get/sliders/0", function(data) {
+    alert(data);
+
+  });
+}
+
 /***
     Ready funciton
 ***/
@@ -96,4 +103,8 @@ $(function() {
     getFullDate();
     getTime();
   },500);
+
+  getMainSidebar();
 });
+
+

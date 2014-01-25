@@ -26,26 +26,25 @@
 function goto(pagina_pk, div_id, parent) {
 	var formatedSlug = div_id.replace("/", "-");
 	$("#dynamic-content").append("<div id='" + formatedSlug + "' class='page'></div>");
-
 	//$("#goto_div").attr("id", formatedSlug);
 
     var divID = document.getElementById(formatedSlug);
 	var url = "/get/pagina/"+pagina_pk;
 	var returnDivID = parent + "-nav";
 	var str = "";
+	//var media_url = "{{ MEDIA_URL }}";
 
     $.get(url, function(data) {
 		if (data.class == "page") {
-			divID.innerHTML = "<div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-TTFBI'><h1>" + data.pagina.title + "</h1><div class='page-text-TTFBI'><p>" + data.pagina.description + "</p></div><div class='page-text-footer-TTFBI'><p>" + data.pagina.rodape + "</p></div><div class='page-text-buttons-TTFBI'><div class='button button-submit' style='width: 110px;'><a href=''>Centros Associados</a></div></div></div></div>";
+			divID.innerHTML = "<div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-TTFBI'><h1>" + data.pagina.title + "</h1><div class='page-text-TTFBI'><p>" + data.pagina.description + "</p></div><div class='page-text-footer-TTFBI'><p>" + data.pagina.rodape + "</p></div><div class='page-text-buttons-TTFBI'><div class='button button-submit' style='width: 110px;'><a href=''>Centros Associados</a></div></div></div><img src='/media/" + data.pagina.imagem + "' /></div>";
 			// FIXME: paragraphs in data.pagina.description & data.pagina.rodape
+			// FIXME: media url
 			// TODO: meter a imagem referente à página
 			// TODO: meter os botões popup (se existirem) e o respetivo conteúdo (imagem ou vídeo)
         
 		} else if (data.class == "submenus") {
 			str = "<nav id='" + data.pagina.slug + "-nav' class='page-subnav'>";
-			var menuLinks = "";
-			
-			// FIXME: limpar o elemento antigo, ao criar as divs dinâmicamente
+			var menuLinks = "";			
 			// TODO: botão para voltar para trás
 
 			$.each(data.botoes, function(index, element) {
@@ -59,9 +58,9 @@ function goto(pagina_pk, div_id, parent) {
 
 			setNavCss(data.pagina.slug + "-nav", Object.keys(data.botoes).length);
 			setZindexOrder("#" + data.pagina.slug + "-nav a");
+
 		} else if (data.class == "contact") {
-			divID.innerHTML = "<div id=" + data.pagina.slug + " class='page'><div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-C'><h1>" + data.pagina.title + "</h1><div class='page-text-C'><p>" + data.pagina.endereco + "</p><br><p>Email: " + data.pagina.email + "</p><p>Telefone: " + data.pagina.telefone + "</p><p>Fax: " + data.pagina.fax + "</p><p>Web: " + data.pagina.website + "</p></div></div><img class='page-contact-img' src='#'></div></div>";
-			// TODO: falta meter a imagem referente ao mapa
+			divID.innerHTML = "<div id=" + data.pagina.slug + " class='page'><div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-C'><h1>" + data.pagina.title + "</h1><div class='page-text-C'><p>" + data.pagina.endereco + "</p><br><p>Email: " + data.pagina.email + "</p><p>Telefone: " + data.pagina.telefone + "</p><p>Fax: " + data.pagina.fax + "</p><p>Web: " + data.pagina.website + "</p></div></div><img class='page-contact-img' src='{{ MEDIA_URL }}" + data.pagina.mapa + "'></div></div>";
             
 		} else if (data.class == "list") {
 			// TODO: abaixo do content, substituir a barra dos "eventos", "provas" e "notícias" por um filtro com as categorias do protocolo (quando se escolhe, filtra na lista); estilizar selectbox: http://www.bulgaria-web-developers.com/projects/javascript/selectbox/
@@ -77,7 +76,7 @@ function goto(pagina_pk, div_id, parent) {
 					divID.innerHTML = str;
 				});
 			} else {
-				str = "<div class='list-wrapper'><h1>" + data.pagina.title + "</h1><div class='list-container'>";
+				str = "<div id=" + data.pagina.slug + " class='page'><div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='list-wrapper'><h1>" + data.pagina.title + "</h1><div class='list-container'>";
 
 				var catUrl = "/get/items/"+pagina_pk;
 				$.get(catUrl, function(list_data) {
@@ -100,7 +99,14 @@ function goto(pagina_pk, div_id, parent) {
 		}
 
         $(".content-container").animate({"left": -($(divID).position().left)}, 600);
-        //$(divID).attr("id", "goto_div");
+        
+		$.get("/get/pagina/"+data.pagina.parent, function(elm) {
+			setTimeout(function() {
+        		$("#" + elm.pagina.slug).remove();
+        		$(divID).offset({left: 0 });
+        	}, 700);
+
+		});
     });
 };
 </script>
@@ -118,9 +124,6 @@ function goto(pagina_pk, div_id, parent) {
 	        </a>
 		{% endfor %}
 	</nav>
-	
-    <!--<div id="goto_div" class="page">
-	</div>-->
 {% elif page.listagem %}
 	<!-- TODO: apresentar listagem -->
 {% elif page.contacto %}

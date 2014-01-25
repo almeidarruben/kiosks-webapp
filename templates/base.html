@@ -54,19 +54,17 @@
         </div>
       </div>
       <div class="sidebar">
-        <div class="sidebar-content">
-            <h1></h1>
-            <h2></h2>
-            <h3></h3>
-            <p></p>
-        </div>
-        <nav>
-            <div onclick="sidebarGoto('img1');"></div>
-            <div onclick="sidebarGoto('img2');"></div>
-        </nav>
         {% block sidebar %}
-            <!-- TODO: saber se isto leva raw html ou se se faz um pedido ajax -->
-            {% flatblock "Noticias" %}
+            <div class="sidebar-content">
+                <h1>a</h1>
+                <h2>b</h2>
+                <h3>c</h3>
+                <p>p</p>
+            </div>
+            <nav>
+                <div onclick="sidebarGoto('img1');"></div>
+                <div onclick="sidebarGoto('img2');"></div>
+            </nav>
         {% endblock %}
       </div>
     </div>
