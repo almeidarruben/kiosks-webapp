@@ -36,7 +36,6 @@ function goto(pagina_pk, div_id, parent) {
 		if (data.class == "page") {
 			var str_div = "<div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-TTFBI'><h1>" + data.pagina.title + "</h1><div class='page-text-TTFBI'><p>" + data.pagina.description + "</p></div><div class='page-text-footer-TTFBI'><p>" + data.pagina.rodape + "</p></div>";
 			// FIXME: paragraphs in data.pagina.description & data.pagina.rodape
-			// FIXME: media url
 			// TODO: apagar os elementos
 			// TODO: adicionar divs com o conteúdo dos botoes popup (modal)
 			var str_botoes = "";
@@ -50,9 +49,11 @@ function goto(pagina_pk, div_id, parent) {
 			}
         
 		} else if (data.class == "submenus") {
-			str = "<nav id='" + data.pagina.slug + "-nav' class='page-subnav'>";
+			$(".page-back-button").css({'position': 'absolute', 'left': '0', 'z-index': '100'});
+			str = "<div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div>";
+			str += "<nav id='" + data.pagina.slug + "-nav' class='page-subnav'>";
 			var menuLinks = "";			
-			// TODO: botão para voltar para trás
+			// TODO: botão para avançar em caso de mais de 15 menus
 
 			$.each(data.botoes, function(index, element) {
 				menuLinks += "<a href='#' onClick=\"goto('" + element.link_para + "','" + element.slug + "')\"><h1>" + element.titulo + "</h1><h2>" + element.descricao + "</h2></a>";
@@ -130,7 +131,7 @@ function goto(pagina_pk, div_id, parent) {
 	{% endfor %}
 	</nav>
 {% elif page.pagina %}
-	<div class="page-back-button" style="visibility: hidden"></div>
+	<div class="page-back-button" style="background: #0a202a;"></div>
 	<div class="page-container">
 		<div class="page-text-wrapper-TTFBI">
 			<h1>{{ page.title }}</h1>
@@ -201,8 +202,8 @@ $.get(catUrl, function(list_data) {
 {% endif %}
 
 {% elif page.contacto %}
-	<div class="page-back-button" style="visibility: hidden"></div>
 	<div id="{{ page.contacto.slug }}" class="page">
+		<div class="page-back-button" style="background: #0a202a"></div>
 		<div class="page-container">
 			<div class="page-text-wrapper-C">
 				<h1>{{ page.title }}</h1>
