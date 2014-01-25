@@ -97,6 +97,27 @@ function getMainSidebar() {
   $.get("/get/sliders/0", function(data) {});
 }
 
+function getBottoms() {
+  bottoms_str = "";
+  $.get("/get/bottoms", function(data) {
+    $.each(data, function(id, e) {
+      if (id != "Notícias") {
+        bottoms_str += "<div class='bottom-0'>";
+      } else {
+        bottoms_str += "<div class='news'>";  
+      }
+      bottoms_str += "<h1>" + id + "</h1><ul>"
+
+      /*$.each(e, function(element) {
+        console.log(element.data);
+        bottoms_str += "<li></li>";
+      });*/
+      bottoms_str += "</ul></div>";
+    });
+    $(".footer-info").html(bottoms_str);
+  });
+}
+
 /***
     Ready funciton
 ***/
@@ -108,6 +129,8 @@ $(function() {
   },500);
 
   getMainSidebar();
+
+  getBottoms();
 });
 
 
