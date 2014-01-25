@@ -22,6 +22,7 @@ class ListagemBottom(models.Model):
         return "%s" % self.titulo
 
     class Meta:
+        ordering = ['peso']
         verbose_name = 'Listagem Bottom'
         verbose_name_plural = 'Listagens Bottom'
 

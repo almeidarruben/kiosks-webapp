@@ -13,6 +13,8 @@ from django.forms.models import model_to_dict
 from django.http import HttpResponse
 import json
 from itertools import groupby
+from collections import OrderedDict
+import operator
 
 def to_json(queryset, fields = None):
     JSONSerializer = serializers.get_serializer("json")
@@ -149,7 +151,7 @@ def get_sliders(request):
 
 
 def get_bottoms(request):
-    listagens = ListagemBottom.objects.all().order_by('peso')
+    listagens = ListagemBottom.objects.all()
 
     response_data = {}
     response_data['tamanho'] = 3
@@ -163,8 +165,7 @@ def get_bottoms(request):
             for item in items:
                 response_data['bottoms']["%s"%listagem.titulo][item.pk] = model_to_dict(item)
                 response_data['bottoms']["%s"%listagem.titulo][item.pk]['data'] = \
-                        '%s' % response_data["%s"%listagem.titulo][item.pk]['data']
-                print response_data['bottoms']["%s"%listagem.titulo][item.pk]['data']
+                        '%s' % response_data['bottoms']["%s"%listagem.titulo][item.pk]['data']
     else:
         i = 0
         for listagem in listagens:
@@ -176,8 +177,8 @@ def get_bottoms(request):
                 response_data['bottoms']["%s"%listagem.titulo][item.pk] = model_to_dict(item)
                 response_data['bottoms']["%s"%listagem.titulo][item.pk]['data'] = \
                         '%s' % response_data['bottoms']["%s"%listagem.titulo][item.pk]['data']
-                print response_data['bottoms']["%s"%listagem.titulo][item.pk]['data']
             i+=1
-    print response_data
+
+    response_data['bottoms'] = OrderedDict(sorted(response_data['bottoms'].iteritems(), key=operator.itemgetter(1)))
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")
