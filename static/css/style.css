@@ -371,6 +371,15 @@ footer ul li:last-child {
   overflow-y: auto;  
 }
 
+.bottom-0 h2:hover {
+  text-decoration: none;
+  cursor: default;
+}
+
+.bottom-0 ul {
+  list-style: none;
+}
+
 .topic-date {
   width: auto;
   height: 100%;
@@ -387,16 +396,6 @@ footer ul li:last-child {
   text-transform: uppercase;
 }
 
-/* exams */
-.exams {
-  width: 400px;
-  height: 239px;
-  float: left;
-  margin: 20px 20px 0 20px;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
 /* news */
 .news {
   /*width: 36.21%;*/
@@ -406,6 +405,10 @@ footer ul li:last-child {
   margin: 20px 0 0 20px;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.news ul {
+  list-style: none;
 }
 
 .news:hover, h2:hover{

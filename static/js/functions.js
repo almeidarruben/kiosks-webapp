@@ -17,6 +17,23 @@ function getDayName() {
   $('#clock-day').append(dayName);
 }
 
+function getMonthName(monthID) {
+  var month=new Array();
+  month[0]="Janeiro";
+  month[1]="Fevereiro";
+  month[2]="Março";
+  month[3]="Abril";
+  month[4]="Maio";
+  month[5]="Junho";
+  month[6]="Julho";
+  month[7]="Agosto";
+  month[8]="Setembro";
+  month[9]="Outubro";
+  month[10]="Novembro";
+  month[11]="Dezembro";
+  return month[monthID-1];
+}
+
 function getFullDate() {
   var day = date.getDate();
   var month=new Array();
@@ -99,20 +116,28 @@ function getMainSidebar() {
 
 function getBottoms() {
   bottoms_str = "";
+  var cnt = 1;
   $.get("/get/bottoms", function(data) {
-    $.each(data, function(id, e) {
-      if (id != "Notícias") {
+    $.each(data.bottoms, function(id, e) {
+      if (cnt < data.tamanho) {
         bottoms_str += "<div class='bottom-0'>";
       } else {
         bottoms_str += "<div class='news'>";  
       }
       bottoms_str += "<h1>" + id + "</h1><ul>"
 
-      /*$.each(e, function(element) {
-        console.log(element.data);
-        bottoms_str += "<li></li>";
-      });*/
+      $.each(e, function(eid, element) {
+        if (eid != "peso") {
+          bottoms_str += "<li>";
+          if ((element.data != "None") && (element.data != undefined)) {
+            var date_str = element.data.split("-");
+            bottoms_str += "<div class='topic-date'><div class='topic-day'>" + date_str[2] + "</div><div class='topic-month'>" + getMonthName(date_str[1]).substring(0,3) + "</div></div>";
+          }
+          bottoms_str += "<h2>" + element.titulo + "</h2><p>" + element.descricao + "</p></li>";
+        }
+      });
       bottoms_str += "</ul></div>";
+      cnt ++;
     });
     $(".footer-info").html(bottoms_str);
   });
@@ -129,7 +154,6 @@ $(function() {
   },500);
 
   getMainSidebar();
-
   getBottoms();
 });
 
