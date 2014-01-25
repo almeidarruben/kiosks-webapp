@@ -48,24 +48,9 @@
     <div class="container">
       <div class="content">
         <div id="dynamic-content" class="content-container">
-            {% block main %}
-
-            {% endblock %}
         </div>
       </div>
-      <div class="sidebar">
-        {% block sidebar %}
-            <div class="sidebar-content">
-                <h1>a</h1>
-                <h2>b</h2>
-                <h3>c</h3>
-                <p>p</p>
-            </div>
-            <nav>
-                <div onclick="sidebarGoto('img1');"></div>
-                <div onclick="sidebarGoto('img2');"></div>
-            </nav>
-        {% endblock %}
+      <div id="sidebar-get" class="sidebar">
       </div>
     </div>
     <footer>

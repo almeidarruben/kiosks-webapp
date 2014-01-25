@@ -83,14 +83,28 @@ function gotoBack(elementID, currentID) {
   
 }
 
-function sidebarGoto(elementID) {
-  $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);  
+function getSliderGoto(elementID) {
+  $(".sidebar-content").empty();
+  //$(".content-container").animate({"left": -($("#slide-" + elementID).position().left)}, 600);
+
+  $.get("/get/sliders/1", function(data) {
+    $(".sidebar-content").html("<h1>" + data[elementID].titulo + "</h1><h2>" + data[elementID].subtitulo + "</h2><h3>" + data[elementID].detalhes + "</h3><p>" + data[elementID].texto + "p</p>");
+  });
 }
 
 function getMainSidebar() {
-  $.get("/get/sliders/0", function(data) {
-    alert(data);
+  sidebar_str = "";
+  sidebar_content = document.getElementById("sidebar-get");
 
+  $.get("/get/sliders/1", function(data) {
+    sidebar_str += "<div class='sidebar-content'><h1>" + data[1].titulo + "</h1><h2>" + data[1].subtitulo + "</h2><h3>" + data[1].detalhes + "</h3><p>" + data[1].texto + "p</p></div>";
+
+    sidebar_str += "<nav>";
+    $.each(data, function(id, element) {
+      sidebar_str += "<div onclick='getSliderGoto(" + id + ");'></div>";
+    });
+    sidebar_str += "</nav>";
+    sidebar_content.innerHTML = sidebar_str;
   });
 }
 
