@@ -16,13 +16,7 @@
   height: 100%;
   float: left;
   background: url('../img/icons/page-back-button.png') no-repeat;
-  /*background: transparent url('../img/icons/teste.png') no-repeat;*/
-  /* FIXME: fix back button image name */
   cursor: pointer;
-}
-
-.page-back-button:hover {
-  /*background: #0a202a url('../img/icons/page-back-button-hover.png') no-repeat;*/
 }
 
 .page-container {

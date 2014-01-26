@@ -93,8 +93,8 @@ function setZindexOrder(navID) {
 /* gotoBack */
 function gotoBack(elementID, currentID) {
   $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);
-  $("#" + currentID).attr("id", "goto_div");
-  setTimeout(function() { $("#goto_div").empty();}, 700);
+  $("#" + currentID).attr("id", "hold_div");
+  setTimeout(function() { $("#hold_div").remove();}, 700);
   
 }
 
