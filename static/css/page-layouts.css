@@ -17,8 +17,6 @@
   float: left;
   background: url('../img/icons/page-back-button.png') no-repeat;
   cursor: pointer;
-  position: absolute;
-  left: 0;
   z-index: 1000;
 }
 

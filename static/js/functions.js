@@ -102,7 +102,9 @@ function addBackForwardBtn(btnName, elementID, currentID) {
 function gotoBack(elementID, currentID) {
   $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);
   $("#" + currentID).attr("id", "hold_div");
-  setTimeout(function() { $("#hold_div").remove();}, 700); 
+  setTimeout(function() { 
+    $("#hold_div").remove();
+  }, 700); 
 }
 
 function gotoBackSub(elementID, currentID) {
@@ -113,7 +115,9 @@ function gotoForward(elementID, currentID) {
   $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);
   setTimeout(function() {
     addBackForwardBtn("back","'" + currentID + "'", "'" + elementID);
-    $(".page-back-button").css({'left': '1044px'});
+    $(".page-back-button").css({
+      'position': 'absolute',
+      'left': '1044px'});
   }, 700); 
 }
 
@@ -124,12 +128,15 @@ function gotoForwardSub(elementID, currentID, navCnt) {
     var leftPosition = 1044;
     if (navCnt == 0) {
       leftPosition *= 2;
-      $(".page-back-button").css({'left': leftPosition});  
+      $(".page-back-button").css({
+        'position': 'absolute',
+        'left': leftPosition});  
     } else {
       leftPosition *= (2 + navCnt);
-      $(".page-back-button").css({'left': leftPosition});  
+      $(".page-back-button").css({
+        'position': 'absolute',
+        'left': leftPosition});
     }
-    
   }, 700); 
 }
 
