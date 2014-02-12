@@ -46,7 +46,7 @@ function goto(pagina_pk, div_id, parent) {
 							str_botoes += "<div class='modal-content-video-container'><a href='/media/" + element.ficheiro + "' style=\"display:block;width:520px;height:330px\" id=\"player\"></a> </div>";
 							video = true;
 						} else if(element.tipo == 'imagem') {
-							//TODO: falta meter o que aparece em caso da modal ser imagem
+							str_botoes += "<div class='modal-content-video-container'><img src='/media/" + element.ficheiro + "' /></div>";
 						} else {
 							str_botoes += "<h1>" + element.titulo + "</h1><div class='modal-content-text-big'>" + element.texto + "</div>";
 						}
