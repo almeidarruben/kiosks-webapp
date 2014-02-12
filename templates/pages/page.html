@@ -43,7 +43,7 @@ function goto(pagina_pk, div_id, parent) {
 				$.each(data.pagina.botoes_popup, function(index, element) {
 					str_botoes += "<div class=\"button button-submit\" onclick=\"getModal('" + element.tipo + "', '" + element.titulo + "-modal');\" style=\"width: 110px;\"><strong><a class='" + element.titulo + "-modal' href='#'>" + element.titulo + "</a></div><div id='" + element.titulo + "-modal' class='modal-content'>";
 						if(element.tipo == 'video') {
-							str_botoes += "<div class='modal-content-video-container'><a href='" + element.video + "' style=\"display:block;width:520px;height:330px\" id=\"player\"></a> </div>";
+							str_botoes += "<div class='modal-content-video-container'><a href='/media/" + element.ficheiro + "' style=\"display:block;width:520px;height:330px\" id=\"player\"></a> </div>";
 							video = true;
 						} else if(element.tipo == 'imagem') {
 							//TODO: falta meter o que aparece em caso da modal ser imagem
@@ -55,7 +55,7 @@ function goto(pagina_pk, div_id, parent) {
 				str_botoes += "</div>";
 				divID.innerHTML = str_div + str_botoes + "</div><img src='/media/" + data.pagina.imagem + "' /></div>";
 				if(video)
-					flowplayer("player", "{{ STATIC_URL }}js/flowplayer-3.2.18.swf");
+					flowplayer("player", "{{ STATIC_URL }}js/flowplayer/flowplayer-3.2.18.swf");
 			}
         
 		} else if (data.class == "submenus") {
@@ -252,9 +252,13 @@ function goto(pagina_pk, div_id, parent) {
 					<strong><a class="{{ botao.tipo }}-modal" href='#'>{{ botao.titulo }}</a>
 				</div>
 				<div id="{{ botao.titulo }}-modal" class="modal-content">
-					{% if botao.tipo == 'video' or  botao.tipo == 'imagem' %}
+					{% if botao.tipo == 'video' %}
 						<div class="modal-content-video-container">
-	              			<iframe src="#" frameborder="0" allowfullscreen></iframe>
+	              			<a href="/media/{{ botao.ficheiro }}" style="display:block;width:520px;height:330px" id="player"></a>
+	            		</div>
+	            	{% elif botao.tipo == 'imagem' %}
+	            		<div class="modal-content-video-container">
+	            			<img src="/media/{{ botao.ficheiro }}" />
 	            		</div>
 	            	{% elif botao.tipo == 'texto' %}
 	        	    	<h1>{{ botao.titulo }}</h1>
@@ -269,6 +273,9 @@ function goto(pagina_pk, div_id, parent) {
 		</div>
 		<img src="/media/{{ page.pagina.imagem }}"/>
 	</div>
+	<script>
+		flowplayer("player", "{{ STATIC_URL }}js/flowplayer/flowplayer-3.2.18.swf");
+	</script>
 
 {% elif page.listagem %}
 <div id="listagem"></div>
