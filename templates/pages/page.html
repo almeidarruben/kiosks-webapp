@@ -41,7 +41,7 @@ function goto(pagina_pk, div_id, parent) {
 			if(data.pagina.botoes_popup){
 				str_botoes = "<div class=\"page-text-buttons-TTFBI\">";
 				$.each(data.pagina.botoes_popup, function(index, element) {
-					str_botoes += "<div class=\"button button-submit\" onclick=\"getModal('" + element.tipo + "');\" style=\"width: 110px;\"><strong><a class='" + element.titulo + "-modal' href='#'>" + element.titulo + "</a></div><div id='modal' class='modal-content'>";
+					str_botoes += "<div class=\"button button-submit\" onclick=\"getModal('" + element.tipo + "', '" + element.titulo + "-modal');\" style=\"width: 110px;\"><strong><a class='" + element.titulo + "-modal' href='#'>" + element.titulo + "</a></div><div id='" + element.titulo + "-modal' class='modal-content'>";
 						if(element.tipo == 'video') {
 							str_botoes += "<div class='modal-content-video-container'><a href='" + element.video + "' style=\"display:block;width:520px;height:330px\" id=\"player\"></a> </div>";
 							video = true;
