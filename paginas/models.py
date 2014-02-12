@@ -8,8 +8,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.files.storage import FileSystemStorage
 
 class Pagina(Page):
-    texto = models.TextField(_('Texto'),
-        null=False,
+    texto = null=False,models.TextField(_('Texto'),
+        
         blank=False)
 
     rodape = models.TextField(_('Rodapé'), 

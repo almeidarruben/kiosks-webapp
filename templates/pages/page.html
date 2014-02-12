@@ -40,7 +40,14 @@ function goto(pagina_pk, div_id, parent) {
 			if(data.pagina.botoes_popup){
 				str_botoes = "<div class=\"page-text-buttons-TTFBI\">";
 				$.each(data.pagina.botoes_popup, function(index, element) {
-					str_botoes += "<div class=\"button button-submit\" style=\"width: 110px;\"><strong><a class=\"contacts-modal\" href='#'>" + element.titulo + "</a></div>";
+					str_botoes += "<div class=\"button button-submit\" onclick=\"getModal('" + element.tipo + "');\" style=\"width: 110px;\"><strong><a class='" + element.titulo + "-modal' href='#'>" + element.titulo + "</a></div><div id='modal' class='modal-content'>";
+						if (element.tipo == 'video' || element.tipo == 'imagem') {
+							str_botoes += "<div class='modal-content-video-container'></div>";
+	            		// TODO: arranjar o player de video para a modal
+						} else {
+							str_botoes += "<h1>" + element.titulo + "</h1><div class='modal-content-text-big'>" + element.texto + "</div>";
+						}
+						str_botoes += "</div>";
 				});
 				str_botoes += "</div>";
 				divID.innerHTML = str_div + str_botoes + "</div><img src='/media/" + data.pagina.imagem + "' /></div>";
@@ -144,16 +151,17 @@ function goto(pagina_pk, div_id, parent) {
 				});
 			}
 		}
-		
+
 		if(data.class != "submenus") {
 	        $(".content-container").animate({"left": -($(divID).position().left)}, 600);
 	        
-			$.get("/get/pagina/"+data.pagina.parent, function(elm) {
+	        //FIXME: erro no get pagina null
+			/*$.get("/get/pagina/"+data.pagina.parent, function(elm) {
 				setTimeout(function() {
 	        		$("#" + elm.pagina.slug).remove();
 	        		$(divID).offset({left: 0 });
 	        	}, 700);
-			});
+			});*/
 		} else {
 			$(".content-container").animate({"left": -($("#" + data.pagina.slug + "-nav").position().left)}, 600);
 		}
@@ -235,15 +243,26 @@ function goto(pagina_pk, div_id, parent) {
 			{% if page.pagina.botoes_popup %}
 			<div class="page-text-buttons-TTFBI">
 				{% for botao in page.pagina.botoes_popup.all %}
-				<div class="button button-submit" style="width: 110px;">
-					<strong><a class="contacts-modal" href='#'>{{ botao.titulo }}</a>
+				<div class="button button-submit" onclick="getModal('{{ botao.tipo }}');" style="width: 110px;">
+					<strong><a class="{{ botao.tipo }}-modal" href='#'>{{ botao.titulo }}</a>
 				</div>
-				<!-- TODO: ver como preencher o modal -->
+				<div id="modal" class="modal-content">
+					{% if botao.tipo == 'video' or  botao.tipo == 'imagem' %}
+						<div class="modal-content-video-container">
+	              			<iframe src="#" frameborder="0" allowfullscreen></iframe>
+	            		</div>
+	            	{% elif botao.tipo == 'texto' %}
+	        	    	<h1>{{ botao.titulo }}</h1>
+            			<div class="modal-content-text-big">
+            				<p>{{ botao.texto }}</p>
+            			</div>
+            		{% endif %}
+				</div>
 				{% endfor %}
 			</div>
 			{% endif %}
 		</div>
-	<img src="/media/{{ page.pagina.imagem }}"/>
+		<img src="/media/{{ page.pagina.imagem }}"/>
 	</div>
 
 {% elif page.listagem %}

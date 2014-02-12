@@ -195,6 +195,31 @@ function getBottoms() {
   });
 }
 
+
+function getModal(modalType) {
+  if (modalType == "texto" || modalType == "imagem" || modalType == "video") {
+    // Load text / image / video modal
+    $('#modal').modal({
+      position: [90, 100],
+      minWidth: 800,
+    });
+  } else if (modalType == "news") {
+    // Load news modal
+    $('#modal').modal({
+      position: [435, 830],
+      minWidth: 500,
+    });
+  } else {
+    // Load Ficha Técnica
+    $('#modal').modal({
+      position: [435, 0],
+      minWidth: 1360,
+      minHeight: 420,
+    });
+  }
+  return false;
+}
+
 /***
     Ready funciton
 ***/
