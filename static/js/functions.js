@@ -179,6 +179,7 @@ function getBottoms(listagem, pagina_pk, titulo, tipo, slug, returnDivID) {
         }
         bottoms_str += "<h1>" + id + "</h1><ul>";
 
+        // TODO: posicionar as modal das notificas dinâmicamente
         $.each(e, function(eid, element) {
           if (eid != "peso") {
             var str = element.titulo;
@@ -213,7 +214,7 @@ function getBottoms(listagem, pagina_pk, titulo, tipo, slug, returnDivID) {
       $.get(url, function(data) {
         var bottoms_str = "";
         if(!jQuery.isEmptyObject(data)){
-          bottoms_str = "<div class=\"footer-search\"><h1>Pesquisa</h1><select>";
+          bottoms_str = "<div class=\"footer-search\"><h1>Pesquisa</h1><select id='search_ddl'>";
           $.each(data, function(id, e) {
             bottoms_str += "<option value=unidade-" + e + ">" + e + "</option>";
           });
@@ -224,7 +225,7 @@ function getBottoms(listagem, pagina_pk, titulo, tipo, slug, returnDivID) {
     } else {
       var url = "/get/categorias/" + pagina_pk;
       var footer_div = $("footer");
-      var bottoms_str = "<div class=\"footer-search\"><h1>Pesquisa</h1><select>";
+      var bottoms_str = "<div class=\"footer-search\"><h1>Pesquisa</h1><select id='search_ddl'>";
       $.get(url, function(data) {
         $.each(data, function(id, e) {
           bottoms_str += "<option value=categoria-" + id + ">" + e + "</option>";
@@ -233,6 +234,9 @@ function getBottoms(listagem, pagina_pk, titulo, tipo, slug, returnDivID) {
         footer_div.html(bottoms_str);
       });
     }
+    setTimeout(function() {
+      $("#search_ddl").selectbox();
+    }, 500);
   }
 }
 

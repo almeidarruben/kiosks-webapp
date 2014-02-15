@@ -643,3 +643,8 @@ footer ul li:last-child {
   display: block;
   text-decoration: none;
 }
+
+/* overwrite custom dropdownlist style */
+.sbHolder ul li {
+  margin: 0;
+}
