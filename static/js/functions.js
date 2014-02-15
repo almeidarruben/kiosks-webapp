@@ -101,6 +101,10 @@ function addBackForwardBtn(btnName, elementID, currentID) {
 
 function gotoBack(elementID, currentID) {
   $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);
+
+  // remove # from id, if exists
+  currentID = currentID.replace("#","");
+
   $("#" + currentID).attr("id", "hold_div");
   setTimeout(function() { 
     $("#hold_div").remove();
@@ -279,7 +283,7 @@ function filterUnidades(pagina_pk) {
   var unidade_pk = $(".footer-search").find(":selected").val();
   var url = "/get/items/" + pagina_pk + "?unidade=" + unidade_pk.substring(8);
   var divID = $(".protocol-content");
-  console.log(divID);
+  //console.log(divID);
   $.get(url, function(data) {
       if(data) {
           str = "";
@@ -287,7 +291,7 @@ function filterUnidades(pagina_pk) {
             str += "<div class='protocol-topic'><h1>" + element.titulo + "</h1><p>" + element.objectivos + "</p><div class='protocol-subtitle'><h2>Assinatura:</h2><p>" + element.assinatura + "</p><h2>Termo:</h2><p>" + element.termo + "</p></div><div class='protocol-subtitle'><h2>Unidade:</h2><p>" + element.unidade + "</p></div></div>"
           });
           divID.html(str);
-          console.log(divID.innerHTML);
+          //console.log(divID.innerHTML);
       }
     });
 }
