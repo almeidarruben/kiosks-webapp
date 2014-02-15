@@ -122,8 +122,6 @@ function goto(pagina_pk, div_id, parent) {
 			divID.innerHTML = "<div id=" + data.pagina.slug + " class='page'><div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-C'><h1>" + data.pagina.title + "</h1><div class='page-text-C'><p>" + data.pagina.endereco + "</p><br><p>Email: " + data.pagina.email + "</p><p>Telefone: " + data.pagina.telefone + "</p><p>Fax: " + data.pagina.fax + "</p><p>Web: " + data.pagina.website + "</p></div></div><img class='page-contact-img' src='{{ MEDIA_URL }}" + data.pagina.mapa + "'></div></div>";
             
 		} else if (data.class == "list") {
-			// TODO: estilizar selectbox: http://www.bulgaria-web-developers.com/projects/javascript/selectbox/, meter select box com isto http://dev.jtsage.com/jQM-SimpleDialog/demos/string.html
-
 			if (data.pagina.tipo == "prot_pub") {
 				protocolUrl = "/get/items/"+pagina_pk;
 				$.get(protocolUrl, function(protocol_data) {

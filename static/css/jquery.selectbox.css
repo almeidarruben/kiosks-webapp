@@ -1,0 +1,116 @@
+@CHARSET "UTF-8";
+.sbHolder{
+	width: 350px;
+	height: 34px;
+	font-size: 14px;
+	border: 0;
+	border-radius: 0;
+	background: rgba(255, 255, 255, 0.05) url(../img/icons/down_arrow.png) no-repeat right;
+	background-position: 97% 100%;
+	color: #a6a8aa;
+	cursor: pointer;
+	-webkit-appearance: none;
+	float: left;
+	text-indent: 4px;
+	position: relative;
+}
+.sbHolder:focus .sbSelector{
+	
+}
+.sbSelector{
+	display: block;
+	height: 34px;
+	left: 0;
+	line-height: 34px;
+	outline: none;
+	overflow: hidden;
+	position: absolute;
+	text-indent: 10px;
+	top: 0;
+	width: 350px;
+}
+.sbSelector:link, .sbSelector:visited, .sbSelector:hover{
+	color: #a6a8aa;
+	outline: none;
+	text-decoration: none;
+}
+.sbToggle{
+	/*background: url(../img/select-icons.png) 0 0 no-repeat;*/
+	display: block;
+	height: 34px;
+	outline: none;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 34px;
+}
+.sbToggle:hover{
+	/*background: url(../img/select-icons.png) 0 0 no-repeat;*/
+}
+.sbToggleOpen{
+	/*background: url(../img/select-icons.png) 0 0 no-repeat;*/
+}
+.sbToggleOpen:hover{
+	/*background: url(../img/select-icons.png) 0 0 no-repeat;*/
+}
+/*.sbHolderDisabled{
+	background-color: #3C3C3C;
+	border: solid 1px #515151;
+}
+.sbHolderDisabled .sbHolder{
+	
+}
+.sbHolderDisabled .sbToggle{
+	
+}*/
+.sbOptions{
+	background-color: transparent;
+	list-style: none;
+	left: -1px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 34px;
+	width: 350px;
+	z-index: 1;
+	overflow-y: auto;
+}
+
+.sbOptions li{
+	padding: 0;
+}
+.sbOptions a{
+	/*border-bottom: dotted 1px #515151;*/
+	display: block;
+	outline: none;
+	padding: 7px 0 7px 6px;
+}
+.sbOptions a:link, .sbOptions a:visited{
+	color: #a6a8aa;
+	text-decoration: none;
+}
+.sbOptions a:hover,
+.sbOptions a:focus,
+.sbOptions a.sbFocus{
+	color: white;
+}
+.sbOptions li.last a{
+	border-bottom: none;
+}
+/*.sbOptions .sbDisabled{
+	border-bottom: dotted 1px #515151;
+	color: #999;
+	display: block;
+	padding: 7px 0 7px 3px;
+}
+.sbOptions .sbGroup{
+	border-bottom: dotted 1px #515151;
+	color: #EBB52D;
+	display: block;
+	font-weight: bold;
+	padding: 7px 0 7px 3px;
+}
+.sbOptions .sbSub{
+	padding-left: 17px;
+*/
+}
