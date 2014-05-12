@@ -24,8 +24,8 @@ ADMIN_MENU_ORDER = (
          ("Media Library", "fb_browse"),
          )
     ),
-#     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
-#     ("Users", ("auth.User", "auth.Group",)),
+     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
+     ("Users", ("auth.User", "auth.Group",)),
 )
 
 # A three item sequence, each containing a sequence of template tags

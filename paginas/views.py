@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from paginas.models import Pagina
 from submenus.models import Submenus
-from listagens.models import Listagem, Item, ProjetoServico, ProtocoloPublicacao, Categoria
+from listagens.models import Listagem, ProjetoServico, ProtocoloPublicacao, Categoria
 from contactos.models import Contacto
 
 from mezzanine.pages.models import Page

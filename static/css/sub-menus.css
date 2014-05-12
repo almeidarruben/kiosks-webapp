@@ -128,6 +128,7 @@
   text-align: left;
   font-size: 22px;
   margin-left: 20px;
+  /* FIXME: para titulos grandes este margin-top falha e corta um bocado do texto */
   margin-top: 20%;
   color: #ffffff;
 }

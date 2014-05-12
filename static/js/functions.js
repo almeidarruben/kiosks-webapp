@@ -59,6 +59,7 @@ function setNavCss(navID, navCount) {
   } else if (navCount > 4 && navCount <= 6) {
       navClass = 6;
   } else {
+    // TODO: se tiver mais de 15, cria um botão do lado direito e faz slide para os outros botões que faltam
       navClass = 15;
   }
   

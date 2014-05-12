@@ -35,11 +35,16 @@ function goto(pagina_pk, div_id, parent) {
 		if (data.class == "page") {
 			divID.innerHTML = "<div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-TTFBI'><h1>" + data.pagina.title + "</h1><div class='page-text-TTFBI'><p>" + data.pagina.description + "</p></div><div class='page-text-footer-TTFBI'><p>" + data.pagina.rodape + "</p></div><div class='page-text-buttons-TTFBI'><div class='button button-submit' style='width: 110px;'><a href=''>Centros Associados</a></div></div></div></div>";
 			// FIXME: paragraphs in data.pagina.description & data.pagina.rodape
+			// TODO: meter a imagem referente à página
+			// TODO: meter os botões popup (se existirem) e o respetivo conteúdo (imagem ou vídeo)
         
 		} else if (data.class == "submenus") {
 			str = "<nav id='" + data.pagina.slug + "-nav' class='page-subnav'>";
 			var menuLinks = "";
 			
+			// FIXME: qualquer coisa falha quando se metem 2 submenus seguidos (pode ter a ver com os caracteres extra ASCII [ã,ç,õ,é,á,etc])
+			// TODO: botão para voltar para trás
+
 			$.each(data.botoes, function(index, element) {
 				menuLinks += "<a href='#' onClick=\"goto('" + element.link_para + ",'" + element.slug + "')\"><h1>" + element.titulo + "</h1><h2>" + element.descricao + "</h2></a>";
 			});
@@ -53,8 +58,10 @@ function goto(pagina_pk, div_id, parent) {
 			setZindexOrder("#" + data.pagina.slug + "-nav a");
 		} else if (data.class == "contact") {
 			divID.innerHTML = "<div id=" + data.pagina.slug + " class='page'><div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-C'><h1>" + data.pagina.title + "</h1><div class='page-text-C'><p>" + data.pagina.endereco + "</p><br><p>Email: " + data.pagina.email + "</p><p>Telefone: " + data.pagina.telefone + "</p><p>Fax: " + data.pagina.fax + "</p><p>Web: " + data.pagina.website + "</p></div></div><img class='page-contact-img' src='#'></div></div>";
+			// TODO: falta meter a imagem referente ao mapa
             
 		} else if (data.class == "list") {
+			// TODO: abaixo do content, substituir a barra dos "eventos", "provas" e "notícias" por um filtro com as categorias do protocolo (quando se escolhe, filtra na lista); estilizar selectbox: http://www.bulgaria-web-developers.com/projects/javascript/selectbox/
 
 			if (data.pagina.tipo == "prot_pub") {
 				protocolUrl = "/get/items/"+pagina_pk;
@@ -96,6 +103,7 @@ function goto(pagina_pk, div_id, parent) {
 </script>
 
 {% if page.pagina %}
+	<!-- TODO: apresentar página -->
 {% elif page.submenus %}
 	<nav id="{{page.submenus.slug}}-nav" class="page-subnav">
 		{% for botao in page.submenus.botoes.all %}
@@ -111,6 +119,10 @@ function goto(pagina_pk, div_id, parent) {
     <div id="goto_div" class="page">
 
 	</div>
+{% elif page.listagem %}
+	<!-- TODO: apresentar listagem -->
+{% elif page.contacto %}
+	<!-- TODO: apresentar página de contacto -->
 {% endif %}
 <script>
 	setNavCss("{{page.submenus.slug}}-nav","{{page.submenus.botoes.count }}");
@@ -119,7 +131,4 @@ function goto(pagina_pk, div_id, parent) {
 {% endblock %}
 
 {% block sidebar %}
-
-	<h1>outras cenas</h1>
-
 {% endblock %}

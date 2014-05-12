@@ -54,13 +54,26 @@
         </div>
       </div>
       <div class="sidebar">
+        <div class="sidebar-content">
+            <h1></h1>
+            <h2></h2>
+            <h3></h3>
+            <p></p>
+        </div>
+        <!-- TODO: página com um bool para ser a homepage -->
+        <nav>
+            <div onclick="sidebarGoto('img1');"></div>
+            <div onclick="sidebarGoto('img2');"></div>
+        </nav>
         {% block sidebar %}
+            <!-- TODO: saber se isto leva raw html ou se se faz um pedido ajax -->
             {% flatblock "Noticias" %}
         {% endblock %}
       </div>
     </div>
     <footer>
         <div class="footer-info">
+            <!-- TODO: saber se os "eventos", "provas" e "notícias" levam raw html ou se se faz um pedido ajax -->
             <div class="events">
                 <h1>Eventos</h1>
                 <ul>
@@ -90,7 +103,8 @@
         <div class="footer-links">
             <div>
                 <a>Ficha Técnica</a>
-                <p>Todos os direitos reservados iifa &copy; 2014</p>
+                <!-- TODO: saber o que isto leva, o melhor é raw html num flatblock e fica editável -->
+                <p>Todos os direitos reservados IIFA &copy; 2014</p>
             </div>
         </div>
     </footer>
