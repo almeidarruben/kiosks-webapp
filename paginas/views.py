@@ -156,8 +156,7 @@ def get_bottoms(request):
                 response_data['bottoms']["%s"%listagem.titulo][item.pk] = model_to_dict(item)
                 response_data['bottoms']["%s"%listagem.titulo][item.pk]['data'] = \
                         '%s' % response_data["%s"%listagem.titulo][item.pk]['data']
-                response_data['bottoms']["%s"%listagem.titulo][item.pk] = model_to_dict(item)
-            print response_data
+                print response_data['bottoms']["%s"%listagem.titulo][item.pk]['data']
     else:
         i = 0
         for listagem in listagens:
@@ -169,7 +168,7 @@ def get_bottoms(request):
                 response_data['bottoms']["%s"%listagem.titulo][item.pk] = model_to_dict(item)
                 response_data['bottoms']["%s"%listagem.titulo][item.pk]['data'] = \
                         '%s' % response_data['bottoms']["%s"%listagem.titulo][item.pk]['data']
-                response_data['bottoms']["%s"%listagem.titulo][item.pk] = model_to_dict(item)
+                print response_data['bottoms']["%s"%listagem.titulo][item.pk]['data']
             i+=1
     print response_data
 
