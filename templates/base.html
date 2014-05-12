@@ -20,6 +20,7 @@
 {% compress js %}
 <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
 <script src="{% static "js/functions.js" %}"></script>
+<script src="{% static "js/flowplayer/flowplayer-3.2.13.min.js" %}"></script>
 <script>
 /***
     Ready funciton
@@ -39,7 +40,7 @@ $(function() {
         {% if page.parent %}
         getBottoms(true, "{{ page.pk }}", "{{ page.listagem.title }}", 'prot_pub', "{{ page.slug }}", "{{ page.parent }}-nav");
         {% else %}
-        getBottoms(true, "{{ page.pk }}", "{{ page.listagem.title }}", 'prot_pub', "{{ page.slug }}", "");
+        getBottoms(true, "{{ page.pk }}", "{{ page.listagem.title }}", 'prot_pub', "{{ page.slug }}");
         {% endif %}
     {% else %}
         {% if page.parent %}
