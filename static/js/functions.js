@@ -90,12 +90,47 @@ function setZindexOrder(navID) {
   })
 }
 
-/* gotoBack */
+/* Back & Forward Buttons --- to delete --- */
+function addBackForwardBtn(btnName, elementID, currentID) {
+  if (btnName == "forward") {
+    $("#dynamic-content").append("<div class='page-" + btnName + "-button' onclick=\"gotoForward(" + elementID + ","+ currentID +"');\"></div>");
+  } else {
+    $("#dynamic-content").append("<div class='page-" + btnName + "-button' onclick=\"gotoBackSub(" + elementID + ","+ currentID +"');\"></div>");
+  }
+}
+
 function gotoBack(elementID, currentID) {
   $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);
   $("#" + currentID).attr("id", "hold_div");
-  setTimeout(function() { $("#hold_div").remove();}, 700);
-  
+  setTimeout(function() { $("#hold_div").remove();}, 700); 
+}
+
+function gotoBackSub(elementID, currentID) {
+  $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);
+}
+
+function gotoForward(elementID, currentID) {
+  $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);
+  setTimeout(function() {
+    addBackForwardBtn("back","'" + currentID + "'", "'" + elementID);
+    $(".page-back-button").css({'left': '1044px'});
+  }, 700); 
+}
+
+function gotoForwardSub(elementID, currentID, navCnt) {
+  $(".content-container").animate({"left": -($("#" + elementID).position().left)}, 600);
+  setTimeout(function() {
+    addBackForwardBtn("back","'" + currentID + "'", "'" + elementID);
+    var leftPosition = 1044;
+    if (navCnt == 0) {
+      leftPosition *= 2;
+      $(".page-back-button").css({'left': leftPosition});  
+    } else {
+      leftPosition *= (2 + navCnt);
+      $(".page-back-button").css({'left': leftPosition});  
+    }
+    
+  }, 700); 
 }
 
 function getSliderGoto(elementID) {
@@ -109,7 +144,19 @@ function getSliderGoto(elementID) {
 }
 
 function getMainSidebar() {
-  $.get("/get/sliders/0", function(data) {});
+  sidebar_str = "";
+  sidebar_content = document.getElementById("sidebar-container");
+
+  $.get("/get/sliders/1", function(data) {
+    sidebar_str += "<div class='sidebar-content'><h1>" + data[1].titulo + "</h1><h2>" + data[1].subtitulo + "</h2><h3>" + data[1].detalhes + "</h3><p>" + data[1].texto + "p</p></div>";
+
+    sidebar_str += "<nav>";
+    $.each(data, function(id, element) {
+      sidebar_str += "<div onclick='getSliderGoto(" + id + ");'></div>";
+    });
+    sidebar_str += "</nav>";
+    sidebar_content.innerHTML = sidebar_str;
+  });
 }
 
 function getBottoms() {
@@ -154,5 +201,3 @@ $(function() {
   getMainSidebar();
   getBottoms();
 });
-
-

@@ -17,6 +17,20 @@
   float: left;
   background: url('../img/icons/page-back-button.png') no-repeat;
   cursor: pointer;
+  position: absolute;
+  left: 0;
+  z-index: 1000;
+}
+
+.page-forward-button {
+  width: 36px;
+  height: 100%;
+  float: right;
+  position: absolute; 
+  left: 988px;
+  z-index: 100;
+  background: url('../img/icons/page-forward-button.png') no-repeat;
+  cursor: pointer;
 }
 
 .page-container {
