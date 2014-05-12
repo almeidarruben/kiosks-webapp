@@ -108,23 +108,17 @@ function goto(pagina_pk, div_id, parent) {
 };
 </script>
 
-{% if page.pagina %}
-	<!-- TODO: apresentar página -->
-{% elif page.submenus %}
+{% if page.submenus %}
 	<nav id="{{page.submenus.slug}}-nav" class="page-subnav">
-		{% for botao in page.submenus.botoes.all %}
-			<a href="#" onClick="goto({{ botao.link_para.pk }}, '{{ botao.link_para.slug }}', '{{ page.submenus.slug }}')">
-	        	<h1>{{ botao }}</h1>
-	        	{% if botao.descricao %}
-	        		<h2>{{ botao.descricao }}</h2>
-	        	{% endif %}
-	        </a>
-		{% endfor %}
+	{% for botao in page.submenus.botoes.all %}
+	<a href="#" onClick="goto({{ botao.link_para.pk }}, '{{ botao.link_para.slug }}', '{{ page.submenus.slug }}')">
+		<h1>{{ botao }}</h1>
+		{% if botao.descricao %}
+			<h2>{{ botao.descricao }}</h2>
+		{% endif %}
+	</a>
+	{% endfor %}
 	</nav>
-<<<<<<< HEAD
-{% elif page.listagem %}
-	<!-- TODO: apresentar listagem -->
-=======
 {% elif page.pagina %}
 	<div class="page-back-button" style="visibility: hidden"></div>
 	<div class="page-container">
@@ -151,7 +145,6 @@ function goto(pagina_pk, div_id, parent) {
 	</div>
 
 {% elif page.listagem %}
-<!-- FIXME: o page.listagem não está a funcionar -->
 <div id="listagem"></div>
 
 {% if page.listagem.tipo == 'prot_pub' %}
@@ -197,12 +190,33 @@ $.get(catUrl, function(list_data) {
 
 {% endif %}
 
-
-
-
->>>>>>> b638062... Added ListagensBottom JSON and front page twtweaks
 {% elif page.contacto %}
-	<!-- TODO: apresentar página de contacto -->
+	<div class="page-back-button" style="visibility: hidden"></div>
+	<div id="{{ page.contacto.slug }}" class="page">
+		<div class="page-container">
+			<div class="page-text-wrapper-C">
+				<h1>{{ page.title }}</h1>
+				<div class="page-text-C">
+					{% if page.contacto.endereco %}
+						<p>{{ page.contacto.endereco }}</p><br>
+					{% endif %}
+					{% if page.contacto.email %}
+					<p>{% trans "Email" %}: {{ page.contacto.email }}</p>
+					{% endif %}
+					{% if page.contacto.telefone %}
+					<p>{% trans "Telefone" %}: {{ page.contacto.telefone }}</p>
+					{% endif %}
+					{% if page.contacto.fax %}
+					<p>{% trans "Fax" %}: {{ page.contacto.fax }}</p>
+				{% endif %}
+					{% if page.contacto.website %}
+					<p>{% trans "Web" %}: {{ page.contacto.website }}</p>
+					{% endif %}
+				</div>
+			</div>
+			<img class="page-contact-img" src="/media/{{ page.contacto.mapa }}">
+		</div>
+	</div>
 {% endif %}
 <script>
 	setNavCss("{{page.submenus.slug}}-nav","{{page.submenus.botoes.count }}");
