@@ -127,11 +127,12 @@ function goto(pagina_pk, div_id, parent) {
 				$.get(protocolUrl, function(protocol_data) {
 					str = "<div class='protocol-wrapper'><div class='protocol-content'>";
 					$.each(protocol_data, function(protocol, element) {
-						str += "<div class='protocol-topic'><h1>" + element.titulo + "</h1><p>" + element.objectivos + "</p><div class='protocol-subtitle'><h2>Assinatura:</h2><p>" + element.assinatura + "</p><h2>Termo:</h2><p>" + element.termo + "</p></div><div class='protocol-subtitle'><h2>Unidade:</h2><p>" + element.unidade + "</p></div></div>"
+						str += "<div class='protocol-topic'><h1>" + element.titulo + "</h1><p>" + element.objectivos + "</p><div class='protocol-subtitle'><h2>Assinatura:</h2><p>" + element.assinatura + "</p><h2>Termo:</h2><p>" + element.termo + "</p></div><div class='protocol-subtitle'><h2>Unidade:</h2><p>" + element.unidade + "</p></div></div>";
 					});
-					str += "</div></div>"
+					str += "</div></div>";
 					divID.innerHTML = str;
 				});
+		        getBottoms(true, pagina_pk, data.pagina.title, 'prot_pub', formatedSlug, returnDivID);
 			} else {
 				str = "<div id=" + data.pagina.slug + " class='page'><div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='list-wrapper'><h1>" + data.pagina.title + "</h1><div class='list-container'>";
 
@@ -141,17 +142,15 @@ function goto(pagina_pk, div_id, parent) {
 						str += "<div class='list-item-category'><h1>" + category + "</h1>";
 						$.each(element, function(index, e) {
 							str += "<div class='list-item'><h2>" + e.titulo +"</h2><div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Candidatura:</p><p>"+ e.candidatura +"</p></div>";
-
 		                    str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Fonte de Financiamento:</p><p>" + e.financiamento + "</p></div>";
-
 		                    str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Unidade:</p><p>" + e.unidade + "</p></div>";
-
 		                    str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Responsável:</p><p>" + e.responsavel + "</p></div></div>";
 	                	});
 					});
 					str += "</div></div>";
 					divID.innerHTML = str;
 				});
+			getBottoms(true, pagina_pk, data.pagina.title, 'proj_serv', formatedSlug, returnDivID);
 			}
 		}
 

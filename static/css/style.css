@@ -612,6 +612,10 @@ footer ul li:last-child {
   text-indent: 4px;
 }
 
+.footer-search select option {
+  background: #001723;
+}
+
 .footer-search-button {
   position: relative;
   cursor: pointer;

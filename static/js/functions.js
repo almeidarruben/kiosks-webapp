@@ -246,8 +246,13 @@ function filterCategorias(pagina_pk, titulo, tipo, slug, returnDivID) {
   slug = "#"+slug;
   var formatedSlug = slug.replace("/", "-");
   var divID = document.getElementById(formatedSlug);
+  var elementbyid = true;
+  if(divID == null){
+      divID = $(formatedSlug);
+      elementbyid = false;
+    }
   $.get(url, function(data) {
-      if(returnDivID == null)
+      if(returnDivID != null && returnDivID != 'undefined')
         str = "<div id=" + slug + " class='page'><div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='list-wrapper'><h1>" + titulo + "</h1><div class='list-container'>";
       else
         str = "<div id=" + slug + " class='page'><div class='list-wrapper'><h1>" + titulo + "</h1><div class='list-container'>";
@@ -256,16 +261,16 @@ function filterCategorias(pagina_pk, titulo, tipo, slug, returnDivID) {
           str += "<div class='list-item-category'><h1>" + category + "</h1>";
           $.each(element, function(index, e) {
             str += "<div class='list-item'><h2>" + e.titulo +"</h2><div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Candidatura:</p><p>"+ e.candidatura +"</p></div>";
-
-                      str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Fonte de Financiamento:</p><p>" + e.financiamento + "</p></div>";
-
-                      str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Unidade:</p><p>" + e.unidade + "</p></div>";
-
-                      str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Responsável:</p><p>" + e.responsavel + "</p></div></div>";
-                  });
+            str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Fonte de Financiamento:</p><p>" + e.financiamento + "</p></div>";
+            str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Unidade:</p><p>" + e.unidade + "</p></div>";
+            str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Responsável:</p><p>" + e.responsavel + "</p></div></div>";
+          });
         });
         str += "</div></div>";
-        divID.innerHTML = str;
+        if(elementbyid)
+          divID.innerHTML = str;
+        else
+          divID.html(str);
     });
 }
 
@@ -274,6 +279,7 @@ function filterUnidades(pagina_pk) {
   var unidade_pk = $(".footer-search").find(":selected").val();
   var url = "/get/items/" + pagina_pk + "?unidade=" + unidade_pk.substring(8);
   var divID = $(".protocol-content");
+  console.log(divID);
   $.get(url, function(data) {
       if(data) {
           str = "";
