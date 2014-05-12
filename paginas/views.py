@@ -144,27 +144,26 @@ def get_bottoms(request):
     listagens = ListagemBottom.objects.all().order_by('peso')
 
     response_data = {}
+    response_data['tamanho'] = 3
+    response_data['bottoms'] = {}
 
     if len(listagens) <= 3:
+        response_data['tamanho'] = len(listagens)
         for listagem in listagens:
-            response_data["%s"%listagem.titulo] = {'peso': listagem.peso}
+            response_data['bottoms']["%s"%listagem.titulo] = {'peso': listagem.peso}
             items = ItemBottom.objects.filter(listagem=listagem)
             for item in items:
-                response_data["%s"%listagem.titulo][item.pk] = model_to_dict(item)
-                response_data["%s"%listagem.titulo][item.pk]['data'] = \
-                        '%s' % response_data["%s"%listagem.titulo][item.pk]['data']
+                response_data['bottoms']["%s"%listagem.titulo][item.pk] = model_to_dict(item)
             print response_data
     else:
         i = 0
         for listagem in listagens:
             if i == 3:
                 break
-            response_data["%s"%listagem.titulo] = {'peso': listagem.peso}
+            response_data['bottoms']["%s"%listagem.titulo] = {'peso': listagem.peso}
             items = ItemBottom.objects.filter(listagem=listagem)
             for item in items:
-                response_data["%s"%listagem.titulo][item.pk] = model_to_dict(item)
-                response_data["%s"%listagem.titulo][item.pk]['data'] = \
-                        '%s' % response_data["%s"%listagem.titulo][item.pk]['data']
+                response_data['bottoms']["%s"%listagem.titulo][item.pk] = model_to_dict(item)
             i+=1
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")
