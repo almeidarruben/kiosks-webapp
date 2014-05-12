@@ -1,0 +1,114 @@
+/*
+ * SimpleModal Basic Modal Dialog
+ * http://simplemodal.com
+ *
+ * Copyright (c) 2013 Eric Martin - http://ericmmartin.com
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ */
+
+.modal-content {
+	display:none;
+	overflow: hidden;
+}
+
+/* Overlay */
+#simplemodal-overlay {
+	/*background-color:#000;*/
+}
+
+/* Container */
+#simplemodal-container {
+	height: 290px; 
+	width: 425px; 
+	color: #bbb; 
+	background-color: #001723; 
+	padding: 12px;
+}
+
+#simplemodal-container .simplemodal-data {
+	padding: 8px;
+}
+/*
+#simplemodal-container code {
+	background: #141414; 
+	border-left: 3px solid #65B43D; 
+	color: #bbb; 
+	display: block; 
+	font-size: 12px; 
+	margin-bottom: 12px; 
+	padding: 4px 6px 6px;
+}*/
+
+#simplemodal-container a {
+	color:#ddd;
+}
+
+#simplemodal-container a.modalCloseImg {
+	background: url(../img/icons/modal-close.png) no-repeat; 
+	width: 24px;
+	height: 24px; 
+	display: inline; 
+	z-index: 3200; 
+	position: absolute; 
+	top: 15px; 
+	right: 16px; 
+	cursor:pointer;
+}
+
+/* custom */
+.modal-content h1 {
+	font-size: 22px;
+	color: #ffffff;
+	margin-top: 10px;
+}
+
+.modal-content p {
+	color: #A6A8AB;
+	text-align: left;
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+.modal-content-text-small {
+	width: 408px;
+	height: 180px;
+	overflow: auto;
+	overflow-x: hidden;
+}
+
+.modal-content-text-big {
+	width: 408px;
+	height: 234px;
+	overflow: hidden;
+}
+
+/* video modal */
+.modal-content-video-container {
+	width: 80%;
+	height: 250px;
+	margin: 10px auto;
+}
+
+.modal-content-video-container iframe {
+	width: 100%;
+	height: 100%;
+}
+/* news modal */
+.modal-content-news-container {
+	width: 100%;
+	height: 250px;
+	margin: 10px auto;
+}
+
+.modal-content-news-container h2 {
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+.modal-content-news-container p {
+	color: #A6A8AB;
+}
+/* ficha técnica modal */

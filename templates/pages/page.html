@@ -35,17 +35,19 @@ function getPagina(pagina_pk, div_id) {
 </script>
 
 {% if page.pagina %}
-
-	<p>é página</p>
 	{{ page.description }}
-
 {% elif page.submenus %}
-
-	{% for botao in page.submenus.botoes.all %}
-		<p><a href="#" onClick="getPagina({{ botao.link_para.pk }}, '{{ botao.link_para.slug }}')">{{ botao }}</a></p>
-		<div id="#{{ botao.link_para.slug }}"></div>
-	{% endfor %}
-
+	<nav id="{{page.submenus.slug}}-nav" class="page-subnav">
+		{% for botao in page.submenus.botoes.all %}
+	        <a href="{{ botao.link_para.get_absolute_url }}">
+	        	<h1>{{ botao }}</h1>
+	        </a>
+		{% endfor %}
+	</nav>
 {% endif %}
-
+<script>
+	setNavCss("{{page.submenus.slug}}-nav","{{page.submenus.botoes.count }}");
+	setZindexOrder("#{{page.submenus.slug}}-nav a");	
+</script>
 {% endblock %}
+

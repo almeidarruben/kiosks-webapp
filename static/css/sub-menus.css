@@ -1,0 +1,172 @@
+.page-subnav {
+  width: 1024px;
+  height: 100%;
+  background: black;
+  float: left;
+  margin-right: 20px;
+}
+
+.page-subnav a:after {
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  left: 100%;
+  position: absolute;
+  width: 0;
+  border-width: 15px;
+  border-left-color: #000;
+  top: 40%;
+}
+
+.page-subnav a:hover {
+  background: #1770a6;
+}
+
+.page-subnav a:hover:after {
+  border-left-color: #1770a6;
+}
+
+.page-subnav p {
+  width: 80%;
+  margin: 21% 0 0 20px;
+  text-align: left;
+}
+
+/* 
+  2 buttons sub menu
+*/
+.page-subnav-2 a {
+  width: 50%;
+  height: 100%;
+  display: block;
+  float: left;
+  background-image: -webkit-gradient(linear, left top, right top, 
+    color-stop(0, #363636), color-stop(1, #000000));
+  position: relative;
+  color: #fff;
+  font-size: 22px;
+  margin-top: 1px;
+  cursor: pointer;
+}
+
+.page-subnav-2 a:after {
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  left: 100%;
+  position: absolute;
+  width: 0;
+  border-width: 20px;
+  border-left-color: #000;
+  top: 42.5%;
+}
+
+.page-subnav-2 h1 {
+  width: 90%;
+  text-align: left;
+  font-size: 22px;
+  margin-top: 20%;
+  margin-left: 30px;
+  color: #ffffff;
+}
+
+.page-subnav-2 h2 {
+  width: 90%;
+  text-align: left;
+  margin-right: 10%;
+  margin-left: 30px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #A6A8AB;
+}
+
+/* 
+  4 buttons sub menu
+*/
+.page-subnav-4 a {
+  width: 50%;
+  height: 50%;
+  display: block;
+  float: left;
+  background-image: -webkit-gradient(linear, left top, right top, 
+    color-stop(0, #363636), color-stop(1, #000000));
+  position: relative;
+  color: #fff;
+  font-size: 22px;
+  margin-top: 1px;
+  cursor: pointer;
+}
+
+.page-subnav-4 h1 {
+  width: 90%;
+  text-align: left;
+  font-size: 22px;
+  margin-top: 15%;
+  margin-left: 30px;
+  color: #ffffff;
+}
+
+/* 
+  6 buttons sub menu
+*/
+.page-subnav-6 a {
+  width: 33.33%;
+  height: 50%;
+  display: block;
+  float: left;
+  background-image: -webkit-gradient(linear, left top, right top, 
+    color-stop(0, #363636), color-stop(1, #000000));
+  position: relative;
+  color: #fff;
+  font-size: 22px;
+  margin-top: 1px;
+  cursor: pointer;
+}
+
+.page-subnav-6 h1 {
+  width: 85%;
+  text-align: left;
+  font-size: 22px;
+  margin-left: 20px;
+  margin-top: 20%;
+  color: #ffffff;
+}
+
+/* 
+  15 buttons sub menu
+*/
+.page-subnav-15 a {
+  width: 20%;
+  height: 33.33%;
+  display: block;
+  float: left;
+  background-image: -webkit-gradient(linear, left top, right top, 
+    color-stop(0, #363636), color-stop(1, #000000));
+  position: relative;
+  color: #fff;
+  font-size: 22px;
+  margin-top: 1px;
+  cursor: pointer;
+}
+.page-subnav-15 h1 {
+  width: 85%;
+  text-align: left;
+  font-size: 15px;
+  margin-left: auto;
+  margin-top: 20%;
+  color: #ffffff;
+}
+
+.page-subnav-15 h2 {
+  width: 90%;
+  text-align: left;
+  margin-left: auto;
+  font-size: 13px;
+  color: #cccccc;
+}
+
+/* Special font size */
+.page-subnav-15-13font h1 {
+  font-size: 13px;
+  margin-top: 24%;
+}

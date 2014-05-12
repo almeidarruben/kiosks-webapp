@@ -1,0 +1,201 @@
+/*
+  Diferent Page Layouts
+*/
+/**
+  General
+**/
+.page {
+  width: 1024px;
+  height: 100%;
+  float: left;
+}
+
+.page-back-button {
+  width: 36px;
+  height: 100%;
+  float: left;
+  background: #0a202a url('../img/icons/page-back-button.png') no-repeat;
+  cursor: pointer;
+}
+
+.page-back-button:hover {
+  background: #0a202a url('../img/icons/page-back-button-hover.png') no-repeat;
+}
+
+.page-container {
+  width: 988px;
+  height: 100%;
+  float: left;
+  overflow: hidden;
+  background: #0a202a;
+}
+
+.page-container img {
+  width: 376px;
+  height: 100%;
+  float: right;
+}
+
+/**
+  Page Layout with: title / text / footer text / image
+**/
+.page-text-wrapper-A {
+  width: 592px;
+  height: 320px;
+  margin: 30px 0 0 20px;
+  float: left;
+  position: relative;
+}
+
+.page-text-wrapper-A:after {
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  left: 100%;
+  position: absolute;
+  width: 0;
+  border-width: 30px;
+  border-left-color: #0a202a;
+  top: 37.5%;
+}
+
+.page-text-wrapper-A h1 {
+  width: 100%;
+  font-size: 22px;
+  color: #FFFFFF;
+}
+
+.page-text-A {
+  width: 550px;
+  height: 256px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.page-text-A p {
+  font-size: 14px;
+  color: #C5C5C5;
+  margin-top: 16px;
+}
+
+.page-text-footer-A {
+  width: 550px;
+  height: 100%;
+  margin-top: 10px;
+}
+
+.page-text-footer-A p {
+  font-size: 14px;
+  color: #999999;
+  margin-top: 16px;
+}
+
+/**
+  Page layout with: title / text / footer text / buttons / image
+**/
+.page-text-wrapper-TTFBI {
+  width: 592px;
+  height: 320px;
+  margin: 30px 0 0 20px;
+  float: left;
+  position: relative;
+}
+
+.page-text-wrapper-TTFBI:after {
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  left: 100%;
+  position: absolute;
+  width: 0;
+  border-width: 30px;
+  border-left-color: #0a202a;
+  top: 37.5%;
+}
+
+.page-text-wrapper-TTFBI h1 {
+  width: 100%;
+  font-size: 22px;
+  color: #FFFFFF;
+}
+
+.page-text-TTFBI {
+  width: 550px;
+  height: 220px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.page-text-TTFBI p {
+  font-size: 14px;
+  color: #C5C5C5;
+  margin-top: 16px;
+}
+
+.page-text-footer-TTFBI {
+  width: 550px;
+  height: 20px;
+  margin-top: 10px;
+}
+
+.page-text-footer-TTFBI p {
+  font-size: 14px;
+  color: #999999;
+  margin-top: 16px;
+}
+
+.page-text-buttons-TTFBI {
+  width: 550px;
+  height: 26px;
+  margin-top: 10px;
+}
+
+.page-text-buttons-TTFBI .button-submit {
+  float: left;
+  margin-right: 20px;
+}
+
+/**
+  Contact page layout
+**/
+.page-text-wrapper-C {
+  width: 300px;
+  height: 310px;
+  margin: 30px 0 0 20px;
+  float: left;
+  position: relative;
+  background: #0a202a;
+}
+
+.page-text-wrapper-C:after {
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  left: 100%;
+  position: absolute;
+  width: 0;
+  border-width: 30px;
+  border-left-color: #0a202a;
+  top: 37.5%;
+}
+
+.page-text-wrapper-C h1 {
+  width: 195px;
+  font-size: 17px;
+  font-weight: normal;
+  color: #FFFFFF;
+  margin: 50px auto;
+  margin-bottom: 0;
+}
+
+.page-text-C {
+  width: 195px;
+  height: 150px;
+  margin: 10px auto; 
+}
+
+.page-text-C p {
+  font-size: 12px;
+  color: #C5C5C5;
+}
+
