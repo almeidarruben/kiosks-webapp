@@ -105,6 +105,33 @@ def get_categoria(request, categoria):
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
+def get_categorias(request, listagem):
+    items = ProjetoServico.objects.filter(listagem=listagem)
+    response_data = {}
+    for item in items:
+        response_data[item.categoria.pk] = item.categoria.nome
+    print response_data
+
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+def get_unidades(request, listagem):
+    items = ProtocoloPublicacao.objects.filter(listagem=listagem)
+    response_data = {}
+    print "items", items
+    if items:
+        #TODO: remover duplicados
+        i = 0
+        for item in items:
+            if item.unidade != "" and item.unidade not in response_data.values():
+                response_data[i] = item.unidade
+                i += 1
+
+    print response_data
+
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
 def get_items(request, listagem):
     items = '', 
     response_data = {}

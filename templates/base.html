@@ -20,6 +20,39 @@
 {% compress js %}
 <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
 <script src="{% static "js/functions.js" %}"></script>
+<script>
+/***
+    Ready funciton
+***/
+$(function() {
+  setInterval(function(){
+    getDayName();
+    getFullDate();
+    getTime();
+  },500);
+
+  getMainSidebar();
+
+
+  {% if page.listagem %}
+    {% if page.listagem.tipo == 'prot_pub' %}
+        {% if page.parent %}
+        getBottoms(true, "{{ page.pk }}", "{{ page.listagem.title }}", 'prot_pub', "{{ page.slug }}", "{{ page.parent }}-nav");
+        {% else %}
+        getBottoms(true, "{{ page.pk }}", "{{ page.listagem.title }}", 'prot_pub', "{{ page.slug }}", "");
+        {% endif %}
+    {% else %}
+        {% if page.parent %}
+        getBottoms(true, "{{ page.pk }}", "{{ page.listagem.title }}", 'proj_serv', "{{ page.slug }}", "{{ page.parent }}-nav");
+        {% else %}
+        getBottoms(true, "{{ page.pk }}", "{{ page.listagem.title }}", 'proj_serv', "{{ page.slug }}");
+        {% endif %}
+    {% endif %}
+  {% else %}
+    getBottoms(false);
+  {% endif %}
+});
+</script>
 <script src="{{ STATIC_URL }}js/jquery.simplemodal.js" type="text/javascript"></script>
 <script src="{{ STATIC_URL }}js/simplemodal.basic.js" type='text/javascript' ></script>
 {% block extra_js %}{% endblock %}

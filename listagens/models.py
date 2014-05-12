@@ -3,7 +3,7 @@ from django.db import models
 from mezzanine.pages.models import Page
 from django.contrib import admin
 from mezzanine.pages.admin import PageAdmin
-from django.utils.translation import ugettext_lazy as _
+#TODO: from mezzanine.core.fields import RichTextField
 
 
 class Listagem(Page):
