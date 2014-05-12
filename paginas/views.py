@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from paginas.models import Pagina
 from submenus.models import Submenus
-from listagens.models import Listagem, Item, ProjetoServico, ProtocoloPublicacao
+from listagens.models import Listagem, Item, ProjetoServico, ProtocoloPublicacao, Categoria
 from contactos.models import Contacto
 
 from mezzanine.pages.models import Page
@@ -50,10 +50,9 @@ def get_pagina(request, pagina):
         response_data['items'] = ''
         #FIXME: corrigir o json dos items
         if pagina_nova.tipo == 'proj_serv':
-            response_data['items'] = serializers.serialize("json", ProjetoServico.objects.filter(listagem=pagina_nova))
+            response_data['items'] = to_json(ProjetoServico.objects.filter(listagem=pagina_nova))
         elif pagina_nova.tipo == 'prot_pub':
             response_data['items'] = to_json(ProtocoloPublicacao.objects.filter(listagem=pagina_nova))
-        print response_data['items']
 
     response_data={'pagina': response_data}
     response_data['class']=css_class
@@ -65,5 +64,12 @@ def get_pagina(request, pagina):
             slug_formated = botao.link_para.slug
             slug_formated = slug_formated.replace("/", "-")
             response_data['botoes'][botao.pk]['slug']=slug_formated
+
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+def get_categoria(request, categoria):
+    cat = get_object_or_404(Categoria, pk=categoria)
+    response_data = model_to_dict(cat)
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")
