@@ -238,7 +238,6 @@ INSTALLED_APPS = (
     "mezzanine.twitter",
     #"mezzanine.accounts",
     #"mezzanine.mobile",
-    "mezzanine_blocks",
 
     "sliders",
     "submenus",
