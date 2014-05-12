@@ -138,3 +138,29 @@ def get_sliders(request):
             "%s" % response_data[item.pk]['imagem']
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+def get_bottoms(request):
+    listagens = ListagemBottom.objects.all().order_by('peso')
+
+    response_data = {}
+
+    if len(listagens) <= 3:
+        for listagem in listagens:
+            response_data["%s"%listagem.titulo] = {'peso': listagem.peso}
+            items = ItemBottom.objects.filter(listagem=listagem)
+            for item in items:
+                response_data["%s"%listagem.titulo][item.pk] = model_to_dict(item)
+            print response_data
+    else:
+        i = 0
+        for listagem in listagens:
+            if i == 3:
+                break
+            response_data["%s"%listagem.titulo] = {'peso': listagem.peso}
+            items = ItemBottom.objects.filter(listagem=listagem)
+            for item in items:
+                response_data["%s"%listagem.titulo][item.pk] = model_to_dict(item)
+            i+=1
+
+    return HttpResponse(json.dumps(response_data), content_type="application/json")

@@ -19,7 +19,7 @@ class ListagemBottom(models.Model):
         blank=False)
 
     def __unicode__(self):
-        return "%s" % self.title
+        return "%s" % self.titulo
 
     class Meta:
         verbose_name = 'Listagem Bottom'
