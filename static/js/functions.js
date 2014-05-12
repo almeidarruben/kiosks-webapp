@@ -175,21 +175,32 @@ function getBottoms(listagem, pagina_pk, titulo, tipo, slug, returnDivID) {
         if (cnt < data.tamanho) {
           bottoms_str += "<div class='bottom-0'>";
         } else {
-          bottoms_str += "<div class='news'>";  
+          bottoms_str += "<div class='news'>";
         }
-        bottoms_str += "<h1>" + id + "</h1><ul>"
+        bottoms_str += "<h1>" + id + "</h1><ul>";
 
         $.each(e, function(eid, element) {
           if (eid != "peso") {
-            bottoms_str += "<li>";
+            var str = element.titulo;
+            var modalID = str.replace(" ", "");
+            bottoms_str += "<li onclick=\"getModal('news','" + modalID + "-modal');\">";
             if ((element.data != "None") && (element.data != undefined)) {
               var date_str = element.data.split("-");
-              bottoms_str += "<div class='topic-date'><div class='topic-day'>" + date_str[2] + "</div><div class='topic-month'>" + getMonthName(date_str[1]).substring(0,3) + "</div></div>";
+              bottoms_str += "<div class='topic-date'><div class='topic-day'>" 
+              + date_str[2] + "</div><div class='topic-month'>" 
+              + getMonthName(date_str[1]).substring(0,3) + "</div></div>";
+              bottoms_str += "<h2>" + element.titulo + "</h2>";
             }
-            bottoms_str += "<h2>" + element.titulo + "</h2><p>" + element.descricao + "</p></li>";
+            else {
+              bottoms_str += "<h2>" + element.titulo + "</h2>";
+            }
+            bottoms_str += "<p>" + element.descricao + "</p></li>";
           }
+          bottoms_str += "</ul></div><div id='" + modalID 
+          + "-modal' class='modal-content'><h1>Notícias</h1>" 
+          + "<div class='modal-content-news-container'><h2>" + element.titulo 
+          + "</h2><p>" + element.descricao + "</p></div></div>";
         });
-        bottoms_str += "</ul></div>";
         cnt ++;
       });
       $(".footer-info").html(bottoms_str);
@@ -269,4 +280,27 @@ function filterUnidades(pagina_pk) {
           console.log(divID.innerHTML);
       }
     });
+}
+
+function getModal(modalType, modalID) {
+  if (modalType == "texto" || modalType == "imagem" || modalType == "video") {
+    // Load text / image / video modal
+    $('#' + modalID).modal({
+      position: [90, 100],
+      minWidth: 800,
+    });
+  } else if (modalType == "news") {
+    // Load news modal
+    $('#' + modalID).modal({
+      position: [435, 830],
+      minWidth: 500,
+    });
+  } else {
+    // Load Ficha Técnica
+    $('#' + modalID).modal({
+      position: [435, 0],
+      minWidth: 1360,
+      minHeight: 420,
+    });
+  }
 }

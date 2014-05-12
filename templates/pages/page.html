@@ -244,10 +244,10 @@ function goto(pagina_pk, div_id, parent) {
 			{% if page.pagina.botoes_popup %}
 			<div class="page-text-buttons-TTFBI">
 				{% for botao in page.pagina.botoes_popup.all %}
-				<div class="button button-submit" onclick="getModal('{{ botao.tipo }}');" style="width: 110px;">
+				<div class="button button-submit" onclick="getModal('{{ botao.tipo }}','{{ botao.titulo }}-modal');" style="width: 110px;">
 					<strong><a class="{{ botao.tipo }}-modal" href='#'>{{ botao.titulo }}</a>
 				</div>
-				<div id="modal" class="modal-content">
+				<div id="{{ botao.titulo }}-modal" class="modal-content">
 					{% if botao.tipo == 'video' or  botao.tipo == 'imagem' %}
 						<div class="modal-content-video-container">
 	              			<iframe src="#" frameborder="0" allowfullscreen></iframe>
@@ -259,10 +259,9 @@ function goto(pagina_pk, div_id, parent) {
             			</div>
             		{% endif %}
 				</div>
-				<!-- TODO: Gaudêncio ver como preencher o modal -->
 				{% endfor %}
 			</div>
-			{% endif %}
+		{% endif %}
 		</div>
 		<img src="/media/{{ page.pagina.imagem }}"/>
 	</div>
