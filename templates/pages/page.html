@@ -36,7 +36,7 @@ function goto(pagina_pk, div_id, parent) {
 		if (data.class == "page") {
 			var str_div = "<div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-TTFBI'><h1>" + data.pagina.title + "</h1><div class='page-text-TTFBI'><p>" + data.pagina.description + "</p></div><div class='page-text-footer-TTFBI'><p>" + data.pagina.rodape + "</p></div>";
 			// TODO: apagar os elementos
-			// TODO: adicionar divs com o conteúdo dos botoes popup (modal)
+			// TODO: Gaudêncio - adicionar divs com o conteúdo dos botoes popup (modal)
 			var str_botoes = "";
 			if(data.pagina.botoes_popup){
 				str_botoes = "<div class=\"page-text-buttons-TTFBI\">";
@@ -118,7 +118,7 @@ function goto(pagina_pk, div_id, parent) {
 			divID.innerHTML = "<div id=" + data.pagina.slug + " class='page'><div class='page-back-button' onclick=\"gotoBack('" + returnDivID + "','"+ formatedSlug +"');\"></div><div class='page-container'><div class='page-text-wrapper-C'><h1>" + data.pagina.title + "</h1><div class='page-text-C'><p>" + data.pagina.endereco + "</p><br><p>Email: " + data.pagina.email + "</p><p>Telefone: " + data.pagina.telefone + "</p><p>Fax: " + data.pagina.fax + "</p><p>Web: " + data.pagina.website + "</p></div></div><img class='page-contact-img' src='{{ MEDIA_URL }}" + data.pagina.mapa + "'></div></div>";
             
 		} else if (data.class == "list") {
-			// TODO: abaixo do content, substituir a barra dos "eventos", "provas" e "notícias" por um filtro com as categorias do protocolo (quando se escolhe, filtra na lista); estilizar selectbox: http://www.bulgaria-web-developers.com/projects/javascript/selectbox/, meter select box com isto http://dev.jtsage.com/jQM-SimpleDialog/demos/string.html
+			// TODO: Gaudêncio abaixo do content, substituir a barra dos "eventos", "provas" e "notícias" por um filtro com as categorias do protocolo (quando se escolhe, filtra na lista); estilizar selectbox: http://www.bulgaria-web-developers.com/projects/javascript/selectbox/, meter select box com isto http://dev.jtsage.com/jQM-SimpleDialog/demos/string.html
 
 			if (data.pagina.tipo == "prot_pub") {
 				protocolUrl = "/get/items/"+pagina_pk;
@@ -259,6 +259,7 @@ function goto(pagina_pk, div_id, parent) {
             			</div>
             		{% endif %}
 				</div>
+				<!-- TODO: Gaudêncio ver como preencher o modal -->
 				{% endfor %}
 			</div>
 			{% endif %}
