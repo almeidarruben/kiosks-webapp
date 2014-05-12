@@ -128,7 +128,7 @@ def get_items(request, listagem):
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-def get_sliders(request, bananas):
+def get_sliders(request):
     items = SliderItem.objects.filter(slider__slug="/")
 
     response_data = {}

@@ -93,19 +93,7 @@ function getSliderGoto(elementID) {
 }
 
 function getMainSidebar() {
-  sidebar_str = "";
-  sidebar_content = document.getElementById("sidebar-get");
-
-  $.get("/get/sliders/1", function(data) {
-    sidebar_str += "<div class='sidebar-content'><h1>" + data[1].titulo + "</h1><h2>" + data[1].subtitulo + "</h2><h3>" + data[1].detalhes + "</h3><p>" + data[1].texto + "p</p></div>";
-
-    sidebar_str += "<nav>";
-    $.each(data, function(id, element) {
-      sidebar_str += "<div onclick='getSliderGoto(" + id + ");'></div>";
-    });
-    sidebar_str += "</nav>";
-    sidebar_content.innerHTML = sidebar_str;
-  });
+  $.get("/get/sliders/0", function(data) {});
 }
 
 /***
