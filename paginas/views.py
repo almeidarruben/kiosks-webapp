@@ -3,7 +3,8 @@ from paginas.models import Pagina
 from submenus.models import Submenus
 from listagens.models import Listagem, ProjetoServico, ProtocoloPublicacao, Categoria
 from contactos.models import Contacto
-from sliders.models import Slider
+from sliders.models import Slider, SliderItem
+from listagens_bottom.models import ListagemBottom, ItemBottom
 
 from mezzanine.pages.models import Page
 from django.shortcuts import get_object_or_404
@@ -41,8 +42,6 @@ def get_pagina(request, pagina):
     elif Slider.objects.filter(pk=pagina):
         pagina_nova = Slider.objects.get(pk=pagina)
         css_class = 'slider'
-
-    #TODO: ver os fields necessários para cada um dos casos
 
     response_data = model_to_dict(pagina_nova)
     for item in ['status',
@@ -83,11 +82,11 @@ def get_pagina(request, pagina):
             slug_formated = slug_formated.replace("/", "-")
             response_data['botoes'][botao.pk]['slug']=slug_formated
 
-    if css_class == 'contact':
+    elif css_class == 'contact':
         response_data['pagina']['mapa'] = \
                 '%s' % response_data['pagina']['mapa']
 
-    if css_class == 'slider':
+    elif css_class == 'slider':
         response_data['items']={}
         for item in pagina_nova.items.all():
             response_data['items'][item.pk]=model_to_dict(item)
@@ -125,5 +124,17 @@ def get_items(request, listagem):
                         '%s' % response_data[item.pk]['assinatura']
             response_data[item.pk]['termo'] = \
                         '%s' % response_data[item.pk]['termo']
+
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+def get_sliders(request, bananas):
+    items = SliderItem.objects.filter(slider__slug="/")
+
+    response_data = {}
+    for item in items:
+        response_data[item.pk] = model_to_dict(item)
+        response_data[item.pk]['imagem'] = \
+            "%s" % response_data[item.pk]['imagem']
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")

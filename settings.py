@@ -13,20 +13,17 @@
 
 # Controls the ordering and grouping of the admin menu.
 #
-ADMIN_MENU_ORDER = (
-    ("Content",
-        ("pages.Page",
-         "mezzanine_blocks.Block",
-         "mezzanine_blocks.RichBlock",
-         "mezzanine_blocks.ImageBlock",
-         "blog.BlogPost",
-         "generic.ThreadedComment",
-         ("Media Library", "fb_browse"),
-         )
-    ),
-     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
-     ("Users", ("auth.User", "auth.Group",)),
-)
+#ADMIN_MENU_ORDER = (
+#    ("Content",
+#        ("pages.Page",
+#         "blog.BlogPost",
+#         "generic.ThreadedComment",
+#         ("Media Library", "fb_browse"),
+#         )
+#    ),
+#     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
+#     ("Users", ("auth.User", "auth.Group",)),
+#)
 
 # A three item sequence, each containing a sequence of template tags
 # used to render the admin dashboard.
@@ -85,7 +82,7 @@ ADMIN_MENU_ORDER = (
 
 # If True, the south application will be automatically added to the
 # INSTALLED_APPS setting.
-USE_SOUTH = True
+USE_SOUTH = False
 
 
 ########################
@@ -205,7 +202,7 @@ STATICFILES_DIRS = (
     os.path.join(SITE_ROOT, 'static'),
 )
 
-MEDIA_URL = STATIC_URL + "media/"
+MEDIA_URL = "/static/media/"
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, *MEDIA_URL.strip("/").split("/"))
 
 ROOT_URLCONF = "%s.urls" % PROJECT_DIRNAME
@@ -247,6 +244,7 @@ INSTALLED_APPS = (
     "submenus",
     "paginas",
     "listagens",
+    "listagens_bottom",
     "contactos",
 
     #translation:

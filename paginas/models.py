@@ -38,11 +38,18 @@ class BotoesPopup(models.Model):
     titulo = models.CharField(_('Título'), 
         max_length=100)
 
+    texto = models.TextField(_('Texto'),
+        null=True,
+        blank=True)
+
     ficheiro = models.FileField(_('Ficheiro'),
+        null=True,
+        blank=True,
         storage=FileSystemStorage(location=settings.MEDIA_ROOT),
         upload_to='botoes_popup')
 
-    TIPO_CHOICES = (('imagem', 'Imagem'),
+    TIPO_CHOICES = (('texto', 'Texto'),
+                    ('imagem', 'Imagem'),
                     ('video', 'Vídeo'))
 
     tipo = models.CharField('Tipo',
