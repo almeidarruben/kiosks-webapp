@@ -27,7 +27,6 @@ class Botoes(models.Model):
         blank=True)
 
     PESO_OPTIONS = tuple([('%d' % i, '%d' % i) for i in range(1, 51)])
-    #PESO_OPTIONS = (('a',1),('b',2),('c',3))
 
     peso = models.CharField(_('Peso'),
         max_length=50,

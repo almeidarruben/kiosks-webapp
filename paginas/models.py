@@ -9,8 +9,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.files.storage import FileSystemStorage
 from mezzanine.core.admin import BaseDynamicInlineAdmin, TabularDynamicInlineAdmin
 
-#TODO: adicionar helptext
-
 class Pagina(Page):
     texto = models.TextField(_('Texto'),
         null=False,
@@ -23,7 +21,14 @@ class Pagina(Page):
         null=True,
         blank=True)
 
-    imagem = models.ImageField(_('Imagem'), storage=FileSystemStorage(location=settings.MEDIA_ROOT), upload_to='paginas/imagens')
+    imagem = models.ImageField(_('Imagem'),
+        storage=FileSystemStorage(location=settings.MEDIA_ROOT),
+        upload_to='paginas/imagens')
+
+    botoes_popup = models.ManyToManyField('BotoesPopup',
+        verbose_name=_('Botões Popup'),
+        null=True,
+        blank=True)
 
     def __unicode__(self):
         return "%s" % self.title
@@ -34,15 +39,21 @@ class Pagina(Page):
 
 
 class BotoesPopup(models.Model):
-    pagina = models.ForeignKey('Pagina',
-        verbose_name=_('Botão Popup'),
-        null=False,
-        blank=False)
-
-    #TODO: fazer variavel no json para diferenciar os dois tipos de página: com ou sem botões
-
     titulo = models.CharField(_('Título'), 
         max_length=100)
+
+    ficheiro = models.FileField(_('Ficheiro'),
+        storage=FileSystemStorage(location=settings.MEDIA_ROOT),
+        upload_to='botoes_popup')
+
+    TIPO_CHOICES = (('imagem', 'Imagem'),
+                    ('video', 'Vídeo'))
+
+    tipo = models.CharField('Tipo',
+        max_length=10,
+        choices=TIPO_CHOICES,
+        null=False,
+        blank=False)
 
     def __unicode__(self):
         return "%s" % self.titulo
@@ -52,32 +63,5 @@ class BotoesPopup(models.Model):
         verbose_name_plural = _('Botões Popup')
 
 
-class BotoesPopupImagem(BotoesPopup):
-    imagem = models.ImageField(_('Imagem'), storage=FileSystemStorage(location=settings.MEDIA_ROOT), upload_to='botoes_popup/imagens')
-
-
-class BotoesPopupVideo(BotoesPopup):
-    video = models.FileField(_('Video'), storage=FileSystemStorage(location=settings.MEDIA_ROOT), upload_to='botoes_popup/videos')
-
-
-class BotoesPopupImagemInline(admin.TabularInline):
-    model = BotoesPopupImagem
-
-class BotoesPopupVideoInline(admin.TabularInline):
-    model = BotoesPopupVideo
-
-
-pagina_extra_fieldsets = ((None, {"fields": ("titulo",)}),)
-
-"""
-class PaginaAdmin(PageAdmin):
-    inlines = (BotoesPopupImagem, BotoesPopupVideo,)
-    fieldsets = deepcopy(PageAdmin.fieldsets) + pagina_extra_fieldsets
-
-    class Meta:
-        max_num = 1
-"""
-
 admin.site.register(Pagina, PageAdmin)
-admin.site.register(BotoesPopupImagem)
-admin.site.register(BotoesPopupVideo)
+admin.site.register(BotoesPopup)

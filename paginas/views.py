@@ -41,7 +41,18 @@ def get_pagina(request, pagina):
     #TODO: ver os fields necessários para cada um dos casos
 
     response_data = model_to_dict(pagina_nova)
-    for item in ['status', '_order', 'login_required', 'in_sitemap', 'page_ptr', 'short_url', '_meta_title', 'expiry_date', 'publish_date', 'gen_description', 'keywords', 'in_menus']:
+    for item in ['status',
+                 '_order',
+                 'login_required',
+                 'in_sitemap',
+                 'page_ptr',
+                 'short_url',
+                 '_meta_title',
+                 'expiry_date',
+                 'publish_date',
+                 'gen_description',
+                 'keywords',
+                 'in_menus']:
         if item in response_data:
             del response_data[item]
 
@@ -49,14 +60,28 @@ def get_pagina(request, pagina):
 
     response_data={'pagina': response_data}
     response_data['class']=css_class
-    if css_class == 'submenus':
+
+    if css_class == 'page':
+        response_data['pagina']['imagem'] = \
+                '%s' % response_data['pagina']['imagem']
+        if pagina_nova.botoes_popup:
+            response_data['pagina']['botoes_popup'] = {}
+            for botao in pagina_nova.botoes_popup.all():
+                response_data['pagina']['botoes_popup'][botao.pk] = model_to_dict(botao)
+                response_data['pagina']['botoes_popup'][botao.pk]['ficheiro'] = \
+                        '%s' % response_data['pagina']['botoes_popup'][botao.pk]['ficheiro']
+
+    elif css_class == 'submenus':
     	response_data['botoes']={}
     	for botao in pagina_nova.botoes.all():
             response_data['botoes'][botao.pk]=model_to_dict(botao)
-            print response_data['botoes'][botao.pk]
             slug_formated = botao.link_para.slug
             slug_formated = slug_formated.replace("/", "-")
             response_data['botoes'][botao.pk]['slug']=slug_formated
+
+    if css_class == 'contact':
+        response_data['pagina']['mapa'] = \
+                '%s' % response_data['pagina']['mapa']
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
@@ -78,13 +103,16 @@ def get_items(request, listagem):
             response_data['%s'%key] = {}
             for item in group:
                 response_data['%s'%key][item.pk] = model_to_dict(item)
-                response_data['%s'%key][item.pk]['candidatura'] = '%s'%response_data['%s'%key][item.pk]['candidatura']
+                response_data['%s'%key][item.pk]['candidatura'] = \
+                        '%s' % response_data['%s'%key][item.pk]['candidatura']
 
     elif ProtocoloPublicacao.objects.filter(listagem=listagem):
         items = ProtocoloPublicacao.objects.filter(listagem=listagem)
         for item in items:
             response_data[item.pk] = model_to_dict(item)
-            response_data[item.pk]['assinatura'] = '%s'%response_data[item.pk]['assinatura']
-            response_data[item.pk]['termo'] = '%s'%response_data[item.pk]['termo']
+            response_data[item.pk]['assinatura'] = \
+                        '%s' % response_data[item.pk]['assinatura']
+            response_data[item.pk]['termo'] = \
+                        '%s' % response_data[item.pk]['termo']
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")

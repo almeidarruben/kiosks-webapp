@@ -101,6 +101,9 @@ function goto(pagina_pk, div_id, parent) {
 		{% for botao in page.submenus.botoes.all %}
 			<a href="#" onClick="goto({{ botao.link_para.pk }}, '{{ botao.link_para.slug }}', '{{ page.submenus.slug }}')">
 	        	<h1>{{ botao }}</h1>
+	        	{% if botao.descricao %}
+	        		<h2>{{ botao.descricao }}</h2>
+	        	{% endif %}
 	        </a>
 		{% endfor %}
 	</nav>
@@ -115,3 +118,8 @@ function goto(pagina_pk, div_id, parent) {
 </script>
 {% endblock %}
 
+{% block sidebar %}
+
+	<h1>outras cenas</h1>
+
+{% endblock %}

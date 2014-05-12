@@ -31,7 +31,9 @@ class Contacto(Page):
         null = True,
         blank = True)
 
-    mapa = models.ImageField(_('Mapa'), storage=FileSystemStorage(location=settings.MEDIA_ROOT), upload_to='mapas')
+    mapa = models.ImageField(_('Mapa'),
+        storage=FileSystemStorage(location=settings.MEDIA_ROOT),
+        upload_to='mapas')
 
     def __unicode__(self):
         return "%s" % self.endereco
