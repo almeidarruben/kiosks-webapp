@@ -23,6 +23,11 @@ body {
 a {
   text-decoration: none;
 }
+
+h2 {
+  text-decoration: none;
+  cursor: default;
+}
 /*
   buttons
 */
@@ -265,6 +270,7 @@ header #clock h3 {
   font-size: 20px;
   color: #333333;
   text-transform: uppercase;
+  text-decoration: none;
   margin-bottom: 2px;
 }
 
@@ -300,7 +306,7 @@ header #clock h3 {
   margin-right: 10px;
   display: block;
   cursor: pointer;
-  background: red;
+  background-color: rgb(56, 59, 62);
 }
 
 .sidebar-img {

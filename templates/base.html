@@ -48,11 +48,19 @@
     <div class="container">
       <div class="content">
         <div id="dynamic-content" class="content-container">
+            {% block main %}
+            
+            {% endblock %}
             {% if page.slider %}
-            <div id="img1" class="page sidebar-img" style="background: red;">
-            </div>
-            <div id="img2" class="page sidebar-img" style="background: blue;">
-            </div>
+                <script>
+                slides_str = "";
+                $.get("/get/sliders/1", function(data) {
+                    $.each(data, function(id, element) {
+                        slides_str += "<img id='slide-" + id + "' class='page sidebar-img' src='/media/" + element.imagem + "'\\>";
+                    });
+                    $("#dynamic-content").html(slides_str);
+                });
+                </script>
             {% endif %}
         </div>
       </div>
@@ -69,6 +77,7 @@
                 <div onclick="sidebarGoto('img2');"></div>
             </nav>
         {% endif %}
+      <div id="sidebar-get" class="sidebar">
       </div>
     </div>
     <footer>

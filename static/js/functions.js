@@ -85,11 +85,12 @@ function gotoBack(elementID, currentID) {
 
 function getSliderGoto(elementID) {
   $(".sidebar-content").empty();
-  //$(".content-container").animate({"left": -($("#slide-" + elementID).position().left)}, 600);
 
   $.get("/get/sliders/1", function(data) {
     $(".sidebar-content").html("<h1>" + data[elementID].titulo + "</h1><h2>" + data[elementID].subtitulo + "</h2><h3>" + data[elementID].detalhes + "</h3><p>" + data[elementID].texto + "p</p>");
   });
+
+  $(".content-container").animate({"left": -($("#slide-" + elementID).position().left)}, 600);
 }
 
 function getMainSidebar() {

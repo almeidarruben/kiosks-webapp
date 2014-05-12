@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n mezzanine_tags keyword_tags %}
+{% load mezzanine_tags keyword_tags %}
 
 {% block meta_title %}{{ page.meta_title }}{% endblock %}
 
@@ -26,13 +26,11 @@
 function goto(pagina_pk, div_id, parent) {
 	var formatedSlug = div_id.replace("/", "-");
 	$("#dynamic-content").append("<div id='" + formatedSlug + "' class='page'></div>");
-	//$("#goto_div").attr("id", formatedSlug);
 
     var divID = document.getElementById(formatedSlug);
 	var url = "/get/pagina/"+pagina_pk;
 	var returnDivID = parent + "-nav";
 	var str = "";
-	//var media_url = "{{ MEDIA_URL }}";
 
     $.get(url, function(data) {
 		if (data.class == "page") {
@@ -111,7 +109,9 @@ function goto(pagina_pk, div_id, parent) {
 };
 </script>
 
-{% if page.submenus %}
+{% if page.pagina %}
+	<!-- TODO: apresentar página -->
+{% elif page.submenus %}
 	<nav id="{{page.submenus.slug}}-nav" class="page-subnav">
 		{% for botao in page.submenus.botoes.all %}
 			<a href="#" onClick="goto({{ botao.link_para.pk }}, '{{ botao.link_para.slug }}', '{{ page.submenus.slug }}')">
@@ -122,112 +122,16 @@ function goto(pagina_pk, div_id, parent) {
 	        </a>
 		{% endfor %}
 	</nav>
-{% elif page.pagina %}
-	<div class="page-back-button" style="visibility: hidden"></div>
-	<div class="page-container">
-		<div class="page-text-wrapper-TTFBI">
-			<h1>{{ page.title }}</h1>
-			<div class="page-text-TTFBI">
-				<p>{{ page.pagina.texto }}</p>
-			</div>
-			<div class="page-text-footer-TTFBI">
-				<p>{{ page.pagina.rodape }}</p>
-			</div>
-			{% if page.pagina.botoes_popup %}
-			<div class="page-text-buttons-TTFBI">
-				{% for botao in page.pagina.botoes_popup.all %}
-				<div class="button button-submit" style="width: 110px;">
-					<strong><a class="contacts-modal" href='#'>{{ botao.titulo }}</a>
-				</div>
-				{% endfor %}
-			</div>
-			{% endif %}
-		</div>
-	<img src="/media/{{ page.pagina.imagem }}"/>
-	</div>
-
 {% elif page.listagem %}
-<!-- FIXME: o page.listagem não está a funcionar -->
-<div id="listagem"></div>
-<script>alert("listagem!");</script>
-
-{% if page.listagem.tipo == 'prot_pub' %}
-<script>
-var divID = document.getElementById("listagem");
-var protocolUrl = "/get/items/"+{{ page.pk }};
-$.get(protocolUrl, function(protocol_data) {
-	str = "<div class='protocol-wrapper'><div class='protocol-content'>";
-	$.each(protocol_data, function(protocol, element) {
-		str += "<div class='protocol-topic'><h1>" + element.titulo + "</h1><p>" + element.objectivos + "</p><div class='protocol-subtitle'><h2>Assinatura:</h2><p>" + element.assinatura + "</p><h2>Termo:</h2><p>" + element.termo + "</p></div><div class='protocol-subtitle'><h2>Unidade:</h2><p>" + element.unidade + "</p></div></div>"
-	});
-	str += "</div></div>"
-	divID.innerHTML = str;
-});
-</script>
-
-{% else %}
-
-<script>
-var divID = document.getElementById("listagem");
-
-str = "<div id=" + {{ page.slug }} + " class='page'><div class='page-back-button' style=\"visibility: hidden\"></div><div class='list-wrapper'><h1>" + {{ page.title }} + "</h1><div class='list-container'>";
-
-var catUrl = "/get/items/"+{{ page.pk }};
-$.get(catUrl, function(list_data) {
-	$.each(list_data, function(category, element) {
-		str += "<div class='list-item-category'><h1>" + category + "</h1>";
-		$.each(element, function(index, e) {
-			str += "<div class='list-item'><h2>" + e.titulo +"</h2><div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Candidatura:</p><p>"+ e.candidatura +"</p></div>";
-
-            str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Fonte de Financiamento:</p><p>" + e.financiamento + "</p></div>";
-
-            str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Unidade:</p><p>" + e.unidade + "</p></div>";
-
-            str += "<div class='list-item-parag-wrapper'><p class='list-item-parag-bold'>Responsável:</p><p>" + e.responsavel + "</p></div></div>";
-    	});
-	});
-	str += "</div></div>";
-	divID.innerHTML = str;
-});
-}
-
-</script>
-
-{% endif %}
-
-
-
-
+	<!-- TODO: apresentar listagem -->
 {% elif page.contacto %}
-	<div class="page-back-button" style="visibility: hidden"></div>
-	<div id="{{ page.contacto.slug }}" class="page">
-		<div class="page-container">
-			<div class="page-text-wrapper-C">
-				<h1>{{ page.title }}</h1>
-				<div class="page-text-C">
-					{% if page.contacto.endereco %}
-						<p>{{ page.contacto.endereco }}</p><br>
-					{% endif %}
-					{% if page.contacto.email %}
-					<p>{% trans "Email" %}: {{ page.contacto.email }}</p>
-					{% endif %}
-					{% if page.contacto.telefone %}
-					<p>{% trans "Telefone" %}: {{ page.contacto.telefone }}</p>
-					{% endif %}
-					{% if page.contacto.fax %}
-					<p>{% trans "Fax" %}: {{ page.contacto.fax }}</p>
-					{% endif %}
-					{% if page.contacto.website %}
-					<p>{% trans "Web" %}: {{ page.contacto.website }}</p>
-					{% endif %}
-				</div>
-			</div>
-			<img class="page-contact-img" src="/media/{{ page.contacto.mapa }}">
-		</div>
-	</div>
+	<!-- TODO: apresentar página de contacto -->
 {% endif %}
 <script>
 	setNavCss("{{page.submenus.slug}}-nav","{{page.submenus.botoes.count }}");
 	setZindexOrder("#{{page.submenus.slug}}-nav a");	
 </script>
+{% endblock %}
+
+{% block sidebar %}
 {% endblock %}
